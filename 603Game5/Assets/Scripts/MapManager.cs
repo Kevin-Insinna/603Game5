@@ -5,6 +5,7 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using UnityEngine.WSA;
 
 public class MapManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MapManager : MonoBehaviour
 
     public OverlayTile overlayTilePrefab;
     public GameObject overlayContainer;
+
+    public TileBase tilePrefab;
 
     private void Awake()
     {
@@ -31,31 +34,32 @@ public class MapManager : MonoBehaviour
     {
         var tileMap = gameObject.GetComponentInChildren<Tilemap>();
 
-        //Debug.Log(tileMap);
+        Debug.Log(tileMap);
 
         BoundsInt bounds = tileMap.cellBounds;
 
         Debug.Log(bounds);
 
-        for(int y = 2; y > 0; y--)
+        for(int z = 1; z > 0; z--)
         {
-            for (int x = -5; y < 5; x++)
+            for (int x = -5; x < 5; x++)
             {
-                for (int z = -5; z < 5; z++)
+                for (int y = -5; y < 5; y++)
                 {
                     var tileLocation = new Vector3Int(x, y, z);
 
                     var overlayTile = Instantiate(overlayTilePrefab, overlayContainer.transform);
                     var cellWorldPosition = tileMap.GetCellCenterWorld(tileLocation);
 
-                    overlayTile.transform.position = new Vector3(cellWorldPosition.x, cellWorldPosition.y, cellWorldPosition.z + 1);
+
+                    overlayTile.transform.position = new Vector3(cellWorldPosition.x, cellWorldPosition.y + 0.51f, cellWorldPosition.z);
                     overlayTile.GetComponent<SpriteRenderer>().sortingOrder = tileMap.GetComponent<TilemapRenderer>().sortingOrder;
 
-                    Debug.Log("This is running");
+                    //Debug.Log("This is running");
 
                     if (tileMap.HasTile(tileLocation))
                     {
-                     
+                   
                     }
                 }
             }
