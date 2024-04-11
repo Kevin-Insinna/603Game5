@@ -40,30 +40,29 @@ public class MapManager : MonoBehaviour
 
         Debug.Log(bounds);
 
-        for(int z = 1; z > 0; z--)
+        Debug.Log(bounds.min.y);
+
+        for (int z = bounds.min.z; z <= bounds.max.z; z++)
         {
-            for (int x = -5; x < 5; x++)
+            for (int y = bounds.max.y; y >= bounds.min.y; y--)
             {
-                for (int y = -5; y < 5; y++)
+                for (int x = bounds.min.x; x <= bounds.max.x; x++)
                 {
-                    var tileLocation = new Vector3Int(x, y, z);
-
-                    var overlayTile = Instantiate(overlayTilePrefab, overlayContainer.transform);
-                    var cellWorldPosition = tileMap.GetCellCenterWorld(tileLocation);
-
-
-                    overlayTile.transform.position = new Vector3(cellWorldPosition.x, cellWorldPosition.y + 0.51f, cellWorldPosition.z);
-                    overlayTile.GetComponent<SpriteRenderer>().sortingOrder = tileMap.GetComponent<TilemapRenderer>().sortingOrder;
-
-                    //Debug.Log("This is running");
+                    var tileLocation = new Vector3Int(x, y, z);             
 
                     if (tileMap.HasTile(tileLocation))
                     {
-                   
+                        var overlayTile = Instantiate(overlayTilePrefab, overlayContainer.transform);
+                        var cellWorldPosition = tileMap.GetCellCenterWorld(tileLocation);
+
+                        overlayTile.transform.position = new Vector3(cellWorldPosition.x, cellWorldPosition.y + 0.51f, cellWorldPosition.z);
+                        overlayTile.GetComponent<SpriteRenderer>().sortingOrder = tileMap.GetComponent<TilemapRenderer>().sortingOrder;
                     }
                 }
             }
         }
+
+
     }
 
     // Update is called once per frame
