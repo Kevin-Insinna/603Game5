@@ -9,6 +9,8 @@ public class BattleManager : MonoBehaviour
     int characterListIndex = 0;
     GameObject currentlyActiveCharacter;
 
+    Vector3 cameraDistance = new Vector3(5.363f, 5.874f, -3.972f);
+
     public void Start()
     {
         currentlyActiveCharacter = characterList[characterListIndex];   
@@ -16,7 +18,7 @@ public class BattleManager : MonoBehaviour
 
     public void Update()
     {
-        transform.position = currentlyActiveCharacter.transform.position + new Vector3(5.363f, 5.874f, -3.972f);
+        transform.position = currentlyActiveCharacter.transform.position + cameraDistance;
     }
 
     public void EndTurn()
@@ -31,5 +33,7 @@ public class BattleManager : MonoBehaviour
             characterListIndex++;
         }
         currentlyActiveCharacter = characterList[characterListIndex];
+        
+        //Set conditions in currentlyActiveCharacter so they can perform their actions for the turn
     }
 }
