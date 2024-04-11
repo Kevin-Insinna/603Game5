@@ -10,6 +10,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacter
     private int health;
     private int speed;
     private bool hasFlag;
+    private Vector3 position;
 
     //private List<Item> inventory;
 
@@ -19,6 +20,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacter
     public int Health { get; set; }
     public int Speed { get; }
     public bool HasFlag { get; set; }
+    public Vector3 Position { get; set; }
 
     // Start is called before the first frame update
     void Start()
