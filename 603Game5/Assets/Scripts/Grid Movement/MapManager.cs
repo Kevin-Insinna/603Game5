@@ -15,9 +15,12 @@ public class MapManager : MonoBehaviour
     public OverlayTile overlayTilePrefab;
     public GameObject overlayContainer;
 
+    public GameObject character;
+
     //public TileBase tilePrefab;
 
     public Dictionary<Vector2Int, OverlayTile> map;
+
 
     private void Awake()
     {
@@ -50,20 +53,25 @@ public class MapManager : MonoBehaviour
 
                     if (tileMap.HasTile(tileLocation) && !map.ContainsKey(tileKey))
                     {
-                        //Debug.Log(map.ContainsKey(tileKey));
-
                         var overlayTile = Instantiate(overlayTilePrefab, overlayContainer.transform);
                         var cellWorldPosition = tileMap.GetCellCenterWorld(tileLocation);
 
                         overlayTile.transform.position = new Vector3(cellWorldPosition.x, cellWorldPosition.y + 0.51f, cellWorldPosition.z);
                         overlayTile.GetComponent<SpriteRenderer>().sortingOrder = tileMap.GetComponent<TilemapRenderer>().sortingOrder;
+                        overlayTile.gridLocation = tileLocation;
+
+                        if (tileLocation == new Vector3Int(0, 0, y))
+                        {
+                            character.GetComponent<PlayerCharacter>().activeTile = overlayTile;
+                        }
+
                         map.Add(tileKey, overlayTile);
                     }
                 }
             }
         }
 
-        Debug.Log(map);
+        //Debug.Log(map);
     }
 
     // Update is called once per frame
