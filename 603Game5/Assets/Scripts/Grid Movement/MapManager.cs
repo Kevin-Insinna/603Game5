@@ -15,7 +15,7 @@ public class MapManager : MonoBehaviour
     public OverlayTile overlayTilePrefab;
     public GameObject overlayContainer;
 
-    public GameObject character;
+    public List<GameObject> characters;
 
     //public TileBase tilePrefab;
 
@@ -62,7 +62,10 @@ public class MapManager : MonoBehaviour
 
                         if (tileLocation == new Vector3Int(0, 0, y))
                         {
-                            character.GetComponent<PlayerCharacter>().activeTile = overlayTile;
+                            foreach (GameObject c in characters)
+                            {
+                                c.GetComponent<PlayerCharacter>().activeTile = overlayTile;
+                            }
                         }
 
                         map.Add(tileKey, overlayTile);

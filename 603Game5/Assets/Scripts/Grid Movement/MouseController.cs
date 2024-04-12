@@ -13,7 +13,7 @@ public class MouseController : MonoBehaviour
     private bool tileIsHit;
 
     public GameObject characterPrefab;
-    private PlayerCharacter character;
+    public PlayerCharacter character;
 
     private PathFinder pathFinder;
     private List<OverlayTile> path = new List<OverlayTile>();
@@ -36,7 +36,7 @@ public class MouseController : MonoBehaviour
     {
         var focusedTileHit = GetFocusedOnTile();
 
-        if (tileIsHit)
+        if (tileIsHit && character.IsActiveTurn)
         {
             GameObject overlayTile = focusedTileHit.Value.collider.gameObject;
             transform.position = overlayTile.transform.position;
@@ -105,5 +105,7 @@ public class MouseController : MonoBehaviour
     {
         character.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
         character.activeTile = tile;
+
+        character.IsActiveTurn = false;
     }
 }
