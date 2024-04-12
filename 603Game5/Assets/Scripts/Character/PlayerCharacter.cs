@@ -11,6 +11,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacter
     private int speed;
     private bool hasFlag;
     private Vector3 position;
+    public OverlayTile activeTile;
 
     //private List<Item> inventory;
 
