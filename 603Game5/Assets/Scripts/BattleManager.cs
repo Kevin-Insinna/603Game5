@@ -10,7 +10,7 @@ public class BattleManager : MonoBehaviour
     int characterListIndex = 0;
     PlayerCharacter currentlyActiveCharacter;
 
-    Vector3 cameraDistance = new Vector3(5.363f, 5.874f, -3.972f);
+    Vector3 cameraDistance = new Vector3(-3.17f, 4.75f, -0.07f);
 
     public void Start()
     {

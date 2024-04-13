@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
 
 public class MapManager : MonoBehaviour
 {
