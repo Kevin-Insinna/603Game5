@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8486923980039858032}
   - component: {fileID: -306603394004626871}
   m_Layer: 0
-  m_Name: SkateBoard
+  m_Name: Skate Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

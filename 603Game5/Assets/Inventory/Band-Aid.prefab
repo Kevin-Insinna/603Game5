@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5102206530261349007}
   - component: {fileID: 7623696968208204673}
   - component: {fileID: -6788658017840304194}
+  - component: {fileID: 8101295486506140382}
   m_Layer: 0
   m_Name: Band-Aid
   m_TagString: Untagged
@@ -116,6 +117,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cff8bd0beb6a0704693768d78c61e0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Item: {fileID: 11400000, guid: 7a8df96864d139749b7027cc6c672542, type: 2}
+--- !u!114 &8101295486506140382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4393725343508826588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eccec2f0ba28dd4e83a605e1f0503a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Item: {fileID: 11400000, guid: 7a8df96864d139749b7027cc6c672542, type: 2}
