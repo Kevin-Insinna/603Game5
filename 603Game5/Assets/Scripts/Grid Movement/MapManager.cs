@@ -29,11 +29,7 @@ public class MapManager : MonoBehaviour
         {
             _instance = this;
         }
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
         var tileMap = gameObject.GetComponentInChildren<Tilemap>();
         map = new Dictionary<Vector2Int, OverlayTile>();
 
@@ -70,13 +66,47 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {     
         //Debug.Log(map);
     }
 
-    // Update is called once per frame
-    void Update()
+    public List<OverlayTile> GetNeighborTiles(OverlayTile overlayTile)
     {
-        
+        List<OverlayTile> neighbors = new List<OverlayTile>();
+
+        //Top Neighbor
+        Vector2Int locationToCheck = new Vector2Int(overlayTile.gridLocation.x, overlayTile.gridLocation.y + 1);
+        if (map.ContainsKey(locationToCheck))
+        {
+            //If y height is figured out if(Mathf.Abs(currentOverlayTile.gridLocation.y - map[locationToCheck].gridLocation.y > 1))
+            neighbors.Add(map[locationToCheck]);
+        }
+
+        //Bottom Neighbor
+        locationToCheck = new Vector2Int(overlayTile.gridLocation.x, overlayTile.gridLocation.y - 1);
+        if (map.ContainsKey(locationToCheck))
+        {
+            neighbors.Add(map[locationToCheck]);
+        }
+
+        //Right Neighbor
+        locationToCheck = new Vector2Int(overlayTile.gridLocation.x + 1, overlayTile.gridLocation.y);
+        if (map.ContainsKey(locationToCheck))
+        {
+            neighbors.Add(map[locationToCheck]);
+        }
+
+        //Left Neighbor
+        locationToCheck = new Vector2Int(overlayTile.gridLocation.x - 1, overlayTile.gridLocation.y);
+        if (map.ContainsKey(locationToCheck))
+        {
+            neighbors.Add(map[locationToCheck]);
+        }
+
+        return neighbors;
     }
 }

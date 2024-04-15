@@ -12,7 +12,7 @@ public class BattleManager : MonoBehaviour
 
     Vector3 cameraDistance = new Vector3(-3.17f, 4.75f, -0.07f);
 
-    public void Start()
+    public void Awake()
     {
         foreach(PlayerCharacter p in characterList)
         {
@@ -31,7 +31,9 @@ public class BattleManager : MonoBehaviour
 
     public void EndTurn()
     {
-        Debug.Log("Button pressed");
+        cursorScript.HideCurrentTiles();
+
+        //Debug.Log("Button pressed");
         if (characterListIndex == characterList.Count - 1) 
         {
             characterListIndex = 0;
@@ -43,6 +45,9 @@ public class BattleManager : MonoBehaviour
         }
         currentlyActiveCharacter = characterList[characterListIndex];
         currentlyActiveCharacter.IsActiveTurn = true;
+        currentlyActiveCharacter.CanMove = true;
         cursorScript.character = currentlyActiveCharacter;
+
+        cursorScript.GetInRangeTiles();
     }
 }

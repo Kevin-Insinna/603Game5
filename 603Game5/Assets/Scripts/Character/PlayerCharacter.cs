@@ -6,12 +6,13 @@ public class PlayerCharacter : MonoBehaviour, ICharacter
 {
     private bool isActiveTurn;
     private bool isStunned;
-    private int damage;
-    private int health;
-    private int speed;
+    [SerializeField] private int damage;
+    [SerializeField] private int health;
+    [SerializeField] private int speed;
     private bool hasFlag;
     private Vector3 position;
     public OverlayTile activeTile;
+    private bool canMove;
 
     //private List<Item> inventory;
 
@@ -22,6 +23,8 @@ public class PlayerCharacter : MonoBehaviour, ICharacter
     public int Speed { get; }
     public bool HasFlag { get; set; }
     public Vector3 Position { get; set; }
+
+    public bool CanMove { get; set; }
 
     // Start is called before the first frame update
     void Start()
