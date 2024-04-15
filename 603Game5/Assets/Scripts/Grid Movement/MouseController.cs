@@ -103,6 +103,7 @@ public class MouseController : MonoBehaviour
 
     private void MoveAlongPath()
     {
+        BlockTile(false);
         //Debug.Log(path.Count);
         var step = speed * Time.deltaTime;
 
@@ -120,7 +121,7 @@ public class MouseController : MonoBehaviour
             //GetInRangeTiles();
             HideCurrentTiles();
             ToggleCursor(false);
-
+            BlockTile(true);
         }
     }
 
@@ -151,6 +152,11 @@ public class MouseController : MonoBehaviour
         character.activeTile = tile;
 
         character.IsActiveTurn = false;
+    }
+
+    private void BlockTile(bool isBlocked)
+    {
+        character.activeTile.isBlocked = isBlocked;
     }
 
     private void GetActiveTile()
