@@ -2378,6 +2378,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   characterPrefab: {fileID: 1025153663}
+  character: {fileID: 1025153668}
   speed: 3
 --- !u!1001 &497789890
 PrefabInstance:
@@ -3569,7 +3570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overlayTilePrefab: {fileID: 7999663522218577006, guid: 8541fcea642eb1243870bf9ed882bd87, type: 3}
   overlayContainer: {fileID: 158396266}
-  character: {fileID: 1025153663}
+  characters: []
 --- !u!1001 &686521820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5913,6 +5914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ed0e8c92c144d4489b9e427af244f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveTurn: 1
   activeTile: {fileID: 0}
 --- !u!4 &1038336032 stripped
 Transform:

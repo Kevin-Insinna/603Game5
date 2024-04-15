@@ -10,6 +10,7 @@ public class MouseController : MonoBehaviour
     public Vector3 worldPosition;
     public LayerMask layersToHit;
     private bool tileIsHit;
+    //private bool isCursorActive;
 
     public GameObject characterPrefab;
     public PlayerCharacter character;
@@ -17,17 +18,28 @@ public class MouseController : MonoBehaviour
     private PathFinder pathFinder;
     private List<OverlayTile> path = new List<OverlayTile>();
 
+    private RangeFinder rangeFinder;
+    private List<OverlayTile> inRangeTiles = new List<OverlayTile>();
+
     public float speed;
+
+    //private Vector3 tempPathPos;
 
     // Start is called before the first frame update
     void Start()
     {
-        character = characterPrefab.GetComponent<PlayerCharacter>();
+        //character = characterPrefab.GetComponent<PlayerCharacter>();
         pathFinder = new PathFinder();
+        rangeFinder = new RangeFinder();
+        ToggleCursor(true);
 
-/*
-        tileMap.HasTile(tileLocation)
-        character.activeTile = */
+        /*
+                tileMap.HasTile(tileLocation)
+                character.activeTile = */
+        //GetActiveTile();
+        GetInRangeTiles();
+
+        //tempPathPos = new Vector3();
     }
 
     // Update is called once per frame
@@ -35,17 +47,23 @@ public class MouseController : MonoBehaviour
     {
         var focusedTileHit = GetFocusedOnTile();
 
-        if (tileIsHit && character.IsActiveTurn)
+        if (focusedTileHit.HasValue && character.IsActiveTurn)
         {
+
             GameObject overlayTile = focusedTileHit.Value.collider.gameObject;
             transform.position = overlayTile.transform.position;
-            gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
+            transform.position = new Vector3(transform.position.x, 0.52f, transform.position.z);
 
-            if (Input.GetMouseButtonDown(0))
+            if(overlayTile.GetComponent<SpriteRenderer>() != null)
             {
-                overlayTile.GetComponent<OverlayTile>().ShowTile();
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
 
-                path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>());
+                if (Input.GetMouseButtonDown(0))
+                {
+                    //overlayTile.GetComponent<OverlayTile>().ShowTile();
+                    path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles);
+                    character.CanMove = false;
+                }
             }
         }
 
@@ -54,28 +72,56 @@ public class MouseController : MonoBehaviour
             MoveAlongPath();
         }
         //Scuffed fix to current active tile hovering above group
-        else
+        else if(character.activeTile != null)
         {
             character.activeTile.transform.position = new Vector3(character.activeTile.transform.position.x, 0.51f, character.activeTile.transform.position.z);
         }
     }
 
+    public void GetInRangeTiles()
+    {
+        //Debug.Log("Getting in range tiles");
+
+        GetActiveTile();
+
+        foreach (var item in inRangeTiles)
+        {
+            item.HideTile();
+        }
+
+        inRangeTiles = rangeFinder.GetTilesInRange(character.activeTile,character.Speed); 
+
+        Debug.Log(inRangeTiles.Count);
+
+        foreach (var item in inRangeTiles)
+        {
+            item.ShowTile();
+        }
+
+        ToggleCursor(true);
+    }
+
     private void MoveAlongPath()
     {
+        BlockTile(false);
         //Debug.Log(path.Count);
         var step = speed * Time.deltaTime;
 
-        character.transform.position = Vector3.MoveTowards(character.transform.position, path[0].transform.position, step);
+        Vector3 tempPathLocation = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
+        character.transform.position = Vector3.MoveTowards(character.transform.position, tempPathLocation, step);
 
-        //Vector3 tempPathLocation = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
-
-        character.transform.position = new Vector3(character.transform.position.x, 0.82f, character.transform.position.z);
-        path[0].transform.position = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
-
-        if(Vector3.Distance(character.transform.position, path[0].transform.position) < .01f)
+        if (Vector3.Distance(character.transform.position, tempPathLocation) < .01f)
         {
             PositionCharacterOnMap(path[0]);
             path.RemoveAt(0);
+        }
+
+        if (path.Count == 0)
+        {
+            //GetInRangeTiles();
+            HideCurrentTiles();
+            ToggleCursor(false);
+            BlockTile(true);
         }
     }
 
@@ -102,9 +148,67 @@ public class MouseController : MonoBehaviour
 
     private void PositionCharacterOnMap(OverlayTile tile)
     {
-        character.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
+        character.transform.position = new Vector3(tile.transform.position.x, 0.82f, tile.transform.position.z);
         character.activeTile = tile;
 
         character.IsActiveTurn = false;
     }
+
+    private void BlockTile(bool isBlocked)
+    {
+        character.activeTile.isBlocked = isBlocked;
+    }
+
+    private void GetActiveTile()
+    {
+        var map = MapManager.Instance.map;
+
+        //Weird rounding fix for offset grid
+        int xValue;
+        int zValue;
+
+        //Adjust x value
+        if (character.transform.position.x >= 0)
+            xValue = -(int)(-character.transform.position.x);
+        else if (character.transform.position.x == -0.5)
+            xValue = -1;
+        else
+            xValue = -Mathf.CeilToInt(Mathf.Abs(character.transform.position.x));
+
+        //Adjust z value
+        if (character.transform.position.z >= 0)
+            zValue = -(int)(-character.transform.position.z);
+        else if (character.transform.position.z == -0.5)
+            zValue = -1;
+        else
+            zValue = -Mathf.CeilToInt(Mathf.Abs(character.transform.position.z));
+
+/*        Debug.Log("Char Position: " + character.transform.position.x +"Xvalue:" + xValue);
+        Debug.Log("Char Position: " + character.transform.position.z + "Zvalue:" + zValue);*/
+
+
+        Vector2Int locationToCheck = new Vector2Int(xValue, zValue);
+        //Debug.Log(locationToCheck);    
+        if (map.ContainsKey(locationToCheck))
+        {
+            character.activeTile = map[locationToCheck];
+        }
+    }
+
+    public void HideCurrentTiles()
+    {
+        foreach (var item in inRangeTiles)
+        {
+            item.HideTile();
+        }
+    }
+
+    public void ToggleCursor(bool cursorState)
+    {
+        if(cursorState)
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        else
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+    }
+
 }
