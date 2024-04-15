@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PathFinder
 {
-    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
+    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> searchableTiles)
     {
 /*        Debug.Log("Start location: " + start.gridLocation);
         Debug.Log("End location: " + end.gridLocation);*/
@@ -28,7 +28,7 @@ public class PathFinder
                 return GetFinishedList(start, end);
             }
 
-            var neighborTiles = MapManager.Instance.GetNeighborTiles(currentOverlayTile);
+            var neighborTiles = MapManager.Instance.GetNeighborTiles(currentOverlayTile, searchableTiles);
 
             foreach (var neighborTile in neighborTiles)
             {

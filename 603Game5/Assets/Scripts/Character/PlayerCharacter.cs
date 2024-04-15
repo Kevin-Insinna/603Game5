@@ -20,7 +20,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacter
     public bool IsStunned { get; set; }
     public int Damage { get; }
     public int Health { get; set; }
-    public int Speed { get; }
+    public int Speed { get { return speed; } }
     public bool HasFlag { get; set; }
     public Vector3 Position { get; set; }
 
@@ -29,7 +29,7 @@ public class PlayerCharacter : MonoBehaviour, ICharacter
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("player starting speed" + speed);
     }
 
     // Update is called once per frame

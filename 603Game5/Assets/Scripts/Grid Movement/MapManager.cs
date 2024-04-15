@@ -37,7 +37,7 @@ public class MapManager : MonoBehaviour
 
         for (int z = bounds.min.z; z <= bounds.max.z; z++)
         {
-            for (int y = bounds.max.y; y >= bounds.min.y; y--)
+            for (int y = bounds.min.y; y <= bounds.max.y; y++)
             {
                 for (int x = bounds.min.x; x <= bounds.max.x; x++)
                 {
@@ -74,13 +74,27 @@ public class MapManager : MonoBehaviour
         //Debug.Log(map);
     }
 
-    public List<OverlayTile> GetNeighborTiles(OverlayTile overlayTile)
+    public List<OverlayTile> GetNeighborTiles(OverlayTile overlayTile, List<OverlayTile> searchableTiles)
     {
+        Dictionary<Vector2Int, OverlayTile> tileToSearch = new Dictionary<Vector2Int, OverlayTile>();
+
+        if(searchableTiles.Count > 0)
+        {
+            foreach(var item in searchableTiles)
+            {
+                tileToSearch.Add(item.Grid2DLocation, item);
+            }
+        }
+        else
+        {
+            tileToSearch = map;
+        }
+
         List<OverlayTile> neighbors = new List<OverlayTile>();
 
         //Top Neighbor
         Vector2Int locationToCheck = new Vector2Int(overlayTile.gridLocation.x, overlayTile.gridLocation.y + 1);
-        if (map.ContainsKey(locationToCheck))
+        if (tileToSearch.ContainsKey(locationToCheck))
         {
             //If y height is figured out if(Mathf.Abs(currentOverlayTile.gridLocation.y - map[locationToCheck].gridLocation.y > 1))
             neighbors.Add(map[locationToCheck]);
@@ -88,21 +102,21 @@ public class MapManager : MonoBehaviour
 
         //Bottom Neighbor
         locationToCheck = new Vector2Int(overlayTile.gridLocation.x, overlayTile.gridLocation.y - 1);
-        if (map.ContainsKey(locationToCheck))
+        if (tileToSearch.ContainsKey(locationToCheck))
         {
             neighbors.Add(map[locationToCheck]);
         }
 
         //Right Neighbor
         locationToCheck = new Vector2Int(overlayTile.gridLocation.x + 1, overlayTile.gridLocation.y);
-        if (map.ContainsKey(locationToCheck))
+        if (tileToSearch.ContainsKey(locationToCheck))
         {
             neighbors.Add(map[locationToCheck]);
         }
 
         //Left Neighbor
         locationToCheck = new Vector2Int(overlayTile.gridLocation.x - 1, overlayTile.gridLocation.y);
-        if (map.ContainsKey(locationToCheck))
+        if (tileToSearch.ContainsKey(locationToCheck))
         {
             neighbors.Add(map[locationToCheck]);
         }

@@ -52,6 +52,7 @@ public class MouseController : MonoBehaviour
 
             GameObject overlayTile = focusedTileHit.Value.collider.gameObject;
             transform.position = overlayTile.transform.position;
+            transform.position = new Vector3(transform.position.x, 0.52f, transform.position.z);
 
             if(overlayTile.GetComponent<SpriteRenderer>() != null)
             {
@@ -60,7 +61,7 @@ public class MouseController : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     //overlayTile.GetComponent<OverlayTile>().ShowTile();
-                    path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>());
+                    path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles);
                     character.CanMove = false;
                 }
             }
@@ -79,6 +80,8 @@ public class MouseController : MonoBehaviour
 
     public void GetInRangeTiles()
     {
+        //Debug.Log("Getting in range tiles");
+
         GetActiveTile();
 
         foreach (var item in inRangeTiles)
@@ -86,9 +89,9 @@ public class MouseController : MonoBehaviour
             item.HideTile();
         }
 
-        //Debug.Log("Character speed: " + character.Speed);
+        inRangeTiles = rangeFinder.GetTilesInRange(character.activeTile,character.Speed); 
 
-        inRangeTiles = rangeFinder.GetTilesInRange(character.activeTile, 3); //character.Speed); Character speed not registering
+        Debug.Log(inRangeTiles.Count);
 
         foreach (var item in inRangeTiles)
         {
@@ -103,16 +106,10 @@ public class MouseController : MonoBehaviour
         //Debug.Log(path.Count);
         var step = speed * Time.deltaTime;
 
-        character.transform.position = Vector3.MoveTowards(character.transform.position, path[0].transform.position, step);
+        Vector3 tempPathLocation = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
+        character.transform.position = Vector3.MoveTowards(character.transform.position, tempPathLocation, step);
 
-        //Vector3 tempPathLocation = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
-
-        character.transform.position = new Vector3(character.transform.position.x, 0.82f, character.transform.position.z);
-        //tempPathPos = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
-
-        path[0].transform.position = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
-        //path[0].transform.position
-        if (Vector3.Distance(character.transform.position, path[0].transform.position) < .01f)
+        if (Vector3.Distance(character.transform.position, tempPathLocation) < .01f)
         {
             PositionCharacterOnMap(path[0]);
             path.RemoveAt(0);
@@ -150,7 +147,7 @@ public class MouseController : MonoBehaviour
 
     private void PositionCharacterOnMap(OverlayTile tile)
     {
-        character.transform.position = new Vector3(tile.transform.position.x, tile.transform.position.y, tile.transform.position.z);
+        character.transform.position = new Vector3(tile.transform.position.x, 0.82f, tile.transform.position.z);
         character.activeTile = tile;
 
         character.IsActiveTurn = false;
@@ -160,10 +157,32 @@ public class MouseController : MonoBehaviour
     {
         var map = MapManager.Instance.map;
 
-        Vector2Int locationToCheck = new Vector2Int(Mathf.RoundToInt(character.transform.position.x), Mathf.RoundToInt(character.transform.position.z));
+        //Weird rounding fix for offset grid
+        int xValue;
+        int zValue;
 
-        Debug.Log(locationToCheck);
-        
+        //Adjust x value
+        if (character.transform.position.x >= 0)
+            xValue = -(int)(-character.transform.position.x);
+        else if (character.transform.position.x == -0.5)
+            xValue = -1;
+        else
+            xValue = -Mathf.CeilToInt(Mathf.Abs(character.transform.position.x));
+
+        //Adjust z value
+        if (character.transform.position.z >= 0)
+            zValue = -(int)(-character.transform.position.z);
+        else if (character.transform.position.z == -0.5)
+            zValue = -1;
+        else
+            zValue = -Mathf.CeilToInt(Mathf.Abs(character.transform.position.z));
+
+/*        Debug.Log("Char Position: " + character.transform.position.x +"Xvalue:" + xValue);
+        Debug.Log("Char Position: " + character.transform.position.z + "Zvalue:" + zValue);*/
+
+
+        Vector2Int locationToCheck = new Vector2Int(xValue, zValue);
+        //Debug.Log(locationToCheck);    
         if (map.ContainsKey(locationToCheck))
         {
             character.activeTile = map[locationToCheck];
