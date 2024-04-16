@@ -91,7 +91,7 @@ public class MouseController : MonoBehaviour
 
         inRangeTiles = rangeFinder.GetTilesInRange(character.activeTile,character.Speed); 
 
-        Debug.Log(inRangeTiles.Count);
+        //Debug.Log(inRangeTiles.Count);
 
         foreach (var item in inRangeTiles)
         {

@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class PauseScreenBehavior : MonoBehaviour
 {
     public GameObject pausePanel;
-    public GameObject gameUI;
 
     //Bool to keep track of whether game is paused or not
     public bool isPaused;
@@ -28,7 +27,6 @@ public class PauseScreenBehavior : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         pausePanel.SetActive(!pausePanel.activeInHierarchy);
-        gameUI.SetActive(!gameUI.activeInHierarchy);
     }
 
     //Button Event: Quits to the title screen
