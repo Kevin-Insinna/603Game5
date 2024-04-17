@@ -6,25 +6,31 @@ using UnityEngine;
 
 public class PathFinder
 {
-    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> searchableTiles)
+    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> searchableTiles, bool isPlayer)
     {
-/*        Debug.Log("Start location: " + start.gridLocation);
-        Debug.Log("End location: " + end.gridLocation);*/
+        Debug.Log("Start location: " + start.gridLocation);
+        Debug.Log("End location: " + end.gridLocation);
 
         List<OverlayTile> openList = new List<OverlayTile>();
         List<OverlayTile> closedList = new List<OverlayTile>();
 
         openList.Add(start);
 
+        int iterationCount = 0;
+
         while(openList.Count > 0)
         {
+            iterationCount++;
             OverlayTile currentOverlayTile = openList.OrderBy(x => x.F).First();
+
+            Debug.Log(currentOverlayTile.gridLocation);
 
             openList.Remove(currentOverlayTile);
             closedList.Add(currentOverlayTile);
 
             if(currentOverlayTile == end)
             {
+                Debug.Log("Found path");
                 return GetFinishedList(start, end);
             }
 
@@ -33,10 +39,21 @@ public class PathFinder
             foreach (var neighborTile in neighborTiles)
             {
                 //1 is jump height
-                if (neighborTile.isBlocked || closedList.Contains(neighborTile))
+                if (isPlayer)
                 {
-                    continue;
+                    if (neighborTile.isBlocked || closedList.Contains(neighborTile))
+                    {
+                        continue;
+                    }
                 }
+                else
+                {
+                    if (closedList.Contains(neighborTile))
+                    {
+                        continue;
+                    }
+                }
+
 
                 neighborTile.G = GetManhattanDistance(start, neighborTile);
                 neighborTile.H = GetManhattanDistance(end, neighborTile);
@@ -49,7 +66,7 @@ public class PathFinder
                 }
             }
         }
-
+        Debug.Log("Iteration count: " + iterationCount);
         return new List<OverlayTile>();
     }
 

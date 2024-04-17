@@ -61,7 +61,7 @@ public class MouseController : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     //overlayTile.GetComponent<OverlayTile>().ShowTile();
-                    path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles);
+                    path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
                     character.CanMove = false;
                 }
             }
@@ -71,11 +71,11 @@ public class MouseController : MonoBehaviour
         {
             MoveAlongPath();
         }
-        //Scuffed fix to current active tile hovering above group
+/*        //Scuffed fix to current active tile hovering above group
         else if(character.activeTile != null)
         {
             character.activeTile.transform.position = new Vector3(character.activeTile.transform.position.x, 0.51f, character.activeTile.transform.position.z);
-        }
+        }*/
     }
 
     public void GetInRangeTiles()
