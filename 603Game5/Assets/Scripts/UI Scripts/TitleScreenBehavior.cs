@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class TitleScreenBehavior : MonoBehaviour
 {
     public GameObject optionsPanel;
+    public GameObject controlsPanel;
 
     //Button Event: Loads GameScene
     public void StartGame()
@@ -24,5 +25,10 @@ public class TitleScreenBehavior : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ToggleControls()
+    {
+        controlsPanel.SetActive(!controlsPanel.activeInHierarchy);
     }
 }
