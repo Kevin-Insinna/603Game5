@@ -26,7 +26,10 @@ public class BattleManager : MonoBehaviour
 
     public void Update()
     {
-        transform.position = currentlyActiveCharacter.gameObject.transform.position + cameraDistance;
+        if (this.gameObject.GetComponent<CameraMovement>().cameraLocked)
+        {
+            transform.position = currentlyActiveCharacter.gameObject.transform.position + cameraDistance;
+        }
     }
 
     public void EndTurn()
@@ -49,5 +52,7 @@ public class BattleManager : MonoBehaviour
         cursorScript.character = currentlyActiveCharacter;
 
         cursorScript.GetInRangeTiles();
+
+        this.gameObject.GetComponent<CameraMovement>().ResetCamera();
     }
 }
