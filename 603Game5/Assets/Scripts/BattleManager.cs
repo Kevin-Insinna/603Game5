@@ -47,15 +47,18 @@ public class BattleManager : MonoBehaviour
 
     public void Update()
     {
-        if (isPlayerTurn)
+        if (this.gameObject.GetComponent<CameraMovement>().cameraLocked)
         {
-            transform.position = currentlyActiveCharacter.gameObject.transform.position + cameraDistance;
-        }
-        else
-        {
-            transform.position = currentlyActiveEnemy.gameObject.transform.position + cameraDistance;
-        }
+            if (isPlayerTurn)
+            {
+                transform.position = currentlyActiveCharacter.gameObject.transform.position + cameraDistance;
+            }
 
+            else
+            {                            
+                transform.position = currentlyActiveEnemy.gameObject.transform.position + cameraDistance;
+            }
+        }
     }
 
     public void EndTurn()
@@ -106,6 +109,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
+        this.gameObject.GetComponent<CameraMovement>().ResetCamera();
     }
 
     public void SwapTeam()
@@ -127,6 +131,7 @@ public class BattleManager : MonoBehaviour
 
             cursorScript.GetInRangeTiles();
         }
-        
+
+        this.gameObject.GetComponent<CameraMovement>().ResetCamera();
     }
 }
