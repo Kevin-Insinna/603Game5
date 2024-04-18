@@ -12711,7 +12711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 1978390660}
-  controlsPanel: {fileID: 0}
+  controlsPanel: {fileID: 1966131575}
   isPaused: 0
 --- !u!114 &781914951
 MonoBehaviour:
