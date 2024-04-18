@@ -15,6 +15,9 @@ public class MouseController : MonoBehaviour
     public GameObject characterPrefab;
     public PlayerCharacter character;
 
+    public PauseScreenBehavior pauseScript;
+    public GameObject endTurnButton;
+
     private PathFinder pathFinder;
     private List<OverlayTile> path = new List<OverlayTile>();
 
@@ -45,7 +48,12 @@ public class MouseController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        var focusedTileHit = GetFocusedOnTile();
+        RaycastHit? focusedTileHit = null;
+        
+        if (!pauseScript.isPaused)
+        {
+            focusedTileHit = GetFocusedOnTile();
+        }
 
         if (focusedTileHit.HasValue && character.IsActiveTurn)
         {
@@ -103,6 +111,7 @@ public class MouseController : MonoBehaviour
 
     private void MoveAlongPath()
     {
+        endTurnButton.SetActive(false);
         BlockTile(false);
         //Debug.Log(path.Count);
         var step = speed * Time.deltaTime;
@@ -122,6 +131,8 @@ public class MouseController : MonoBehaviour
             HideCurrentTiles();
             ToggleCursor(false);
             BlockTile(true);
+
+            endTurnButton.SetActive(true);
         }
     }
 
