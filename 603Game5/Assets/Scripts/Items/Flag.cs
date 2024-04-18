@@ -21,11 +21,11 @@ public class Flag : MonoBehaviour
             Debug.Log("Attached to player");
             HoldFlag(other.gameObject);
         }
-        else if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             DropFlag();
         }
-        else if (other.gameObject.CompareTag("Base"))
+        if (other.gameObject.CompareTag("Base"))
         {
             CaptureFlag();
         }
