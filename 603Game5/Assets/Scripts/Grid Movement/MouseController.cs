@@ -21,7 +21,8 @@ public class MouseController : MonoBehaviour
     private RangeFinder rangeFinder;
     private List<OverlayTile> inRangeTiles = new List<OverlayTile>();
 
-    public float speed;
+    public float movementSpeed;
+    public int movementLeft; 
 
     //private Vector3 tempPathPos;
 
@@ -33,6 +34,8 @@ public class MouseController : MonoBehaviour
         rangeFinder = new RangeFinder();
         ToggleCursor(true);
 
+
+        movementLeft = character.Speed;
         /*
                 tileMap.HasTile(tileLocation)
                 character.activeTile = */
@@ -49,7 +52,6 @@ public class MouseController : MonoBehaviour
 
         if (focusedTileHit.HasValue && character.IsActiveTurn)
         {
-
             GameObject overlayTile = focusedTileHit.Value.collider.gameObject;
             transform.position = overlayTile.transform.position;
             transform.position = new Vector3(transform.position.x, 0.52f, transform.position.z);
@@ -80,8 +82,6 @@ public class MouseController : MonoBehaviour
 
     public void GetInRangeTiles()
     {
-        //Debug.Log("Getting in range tiles");
-
         GetActiveTile();
 
         foreach (var item in inRangeTiles)
@@ -89,9 +89,7 @@ public class MouseController : MonoBehaviour
             item.HideTile();
         }
 
-        inRangeTiles = rangeFinder.GetTilesInRange(character.activeTile,character.Speed); 
-
-        //Debug.Log(inRangeTiles.Count);
+        inRangeTiles = rangeFinder.GetTilesInRange(character.activeTile, movementLeft); 
 
         foreach (var item in inRangeTiles)
         {
@@ -104,8 +102,7 @@ public class MouseController : MonoBehaviour
     private void MoveAlongPath()
     {
         BlockTile(false);
-        //Debug.Log(path.Count);
-        var step = speed * Time.deltaTime;
+        var step = movementSpeed * Time.deltaTime;
 
         Vector3 tempPathLocation = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
         character.transform.position = Vector3.MoveTowards(character.transform.position, tempPathLocation, step);
@@ -114,22 +111,31 @@ public class MouseController : MonoBehaviour
         {
             PositionCharacterOnMap(path[0]);
             path.RemoveAt(0);
+            movementLeft--;
         }
 
         if (path.Count == 0)
         {
             //GetInRangeTiles();
+            //ToggleCursor(false);
             HideCurrentTiles();
-            ToggleCursor(false);
             BlockTile(true);
+
+            if(movementLeft > 0)
+            {
+                GetInRangeTiles();
+                character.CanMove = true;
+            }
+            else
+            {
+                ToggleCursor(false);
+            }
         }
     }
 
     public RaycastHit? GetFocusedOnTile()
     {
         Vector3 screenPosition = Input.mousePosition;
-        //screenPosition.z = Camera.main.nearClipPlane + 1;
-        //Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         if(Physics.Raycast(ray, out RaycastHit hit))
@@ -150,8 +156,6 @@ public class MouseController : MonoBehaviour
     {
         character.transform.position = new Vector3(tile.transform.position.x, 0.82f, tile.transform.position.z);
         character.activeTile = tile;
-
-        character.IsActiveTurn = false;
     }
 
     private void BlockTile(bool isBlocked)
@@ -209,6 +213,7 @@ public class MouseController : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         else
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        Debug.Log("Most recent state: " + cursorState);
     }
 
 }

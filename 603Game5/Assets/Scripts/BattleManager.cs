@@ -63,7 +63,6 @@ public class BattleManager : MonoBehaviour
 
     public void EndTurn()
     {
-        Debug.Log("End turn is running");
         if (isPlayerTurn)
         {
             cursorScript.HideCurrentTiles();
@@ -78,13 +77,20 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                characterListIndex++;
+                //Set previous character to not running
+                currentlyActiveCharacter.IsActiveTurn = false;
 
+                //Update new character
+                characterListIndex++;
                 currentlyActiveCharacter = characterList[characterListIndex];
+
+                //Reset character stats
+                cursorScript.movementLeft = currentlyActiveCharacter.Speed;
                 currentlyActiveCharacter.IsActiveTurn = true;
                 currentlyActiveCharacter.CanMove = true;
                 cursorScript.character = currentlyActiveCharacter;
-
+                
+                //Show tiles
                 cursorScript.GetInRangeTiles();
             }
         }
@@ -125,6 +131,8 @@ public class BattleManager : MonoBehaviour
             endTurnButton.SetActive(true);
 
             currentlyActiveCharacter = characterList[characterListIndex];
+
+            cursorScript.movementLeft = currentlyActiveCharacter.Speed;
             currentlyActiveCharacter.IsActiveTurn = true;
             currentlyActiveCharacter.CanMove = true;
             cursorScript.character = currentlyActiveCharacter;

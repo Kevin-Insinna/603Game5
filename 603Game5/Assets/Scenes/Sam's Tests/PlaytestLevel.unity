@@ -7753,7 +7753,8 @@ MonoBehaviour:
     m_Bits: 64
   characterPrefab: {fileID: 1025153663}
   character: {fileID: 0}
-  speed: 3
+  movementSpeed: 3
+  movementLeft: 0
 --- !u!1001 &497789890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16433,6 +16434,7 @@ MonoBehaviour:
   damage: 0
   health: 0
   speed: 3
+  abilityList: []
   spawnLocation: {x: -0.5, y: 0.82, z: -0.5}
   activeTile: {fileID: 0}
 --- !u!54 &1025153669
@@ -17508,6 +17510,7 @@ MonoBehaviour:
   damage: 0
   health: 0
   speed: 4
+  abilityList: []
   spawnLocation: {x: -4.5, y: 0.82, z: -0.5}
   activeTile: {fileID: 0}
 --- !u!65 &1088057394

@@ -7,10 +7,17 @@ public class PlayerCharacter : MonoBehaviour, ICharacter
 {
     private bool isActiveTurn;
     private bool isStunned;
+
+    //Player Stats
     [SerializeField] private int damage;
     [SerializeField] private int health;
     [SerializeField] private int speed;
+    [SerializeField] private List<Abilities> abilityList;
+   // private Abilities
+
+
     [SerializeField] private Vector3 spawnLocation;
+
     private bool hasFlag;
     private Vector3 position;
     public OverlayTile activeTile;
