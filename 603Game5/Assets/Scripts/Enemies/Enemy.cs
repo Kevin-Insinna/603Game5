@@ -10,7 +10,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int movementSpeed;
     [SerializeField] private int damage;
     [SerializeField] private int health;
-    private OverlayTile activeTile;
+    [SerializeField] private Vector3 spawnLocation;
+
+    [SerializeField] private int currentHealth;
+    public OverlayTile activeTile;
     public bool isActiveTurn;
     private bool executeMove;
 
@@ -40,6 +43,8 @@ public class Enemy : MonoBehaviour
     {
         pathFinder = new PathFinder();
         rangeFinder = new RangeFinder();
+
+        currentHealth = health;
 
         isActiveTurn = false;
         executeMove = false;
@@ -82,6 +87,8 @@ public class Enemy : MonoBehaviour
 
     private void MoveAlongPath()
     {
+        Debug.Log("Spaces moved" + spacesMoved);
+        //Debug.Log("")
         BlockTile(false);
         var step = movementSpeed * Time.deltaTime;
 
@@ -110,6 +117,7 @@ public class Enemy : MonoBehaviour
             if (movementEnded)
             {
                 spacesMoved = tileRange;
+                movementEnded = false;
             }
             else
             {
@@ -209,5 +217,20 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             movementEnded = true;
         }
+    }
+
+    public void TakeDamage(int damageTaken)
+    {
+        currentHealth = currentHealth - damageTaken;
+        if(currentHealth <= 0)
+        {
+            currentHealth = health;
+            transform.position = spawnLocation;
+            activeTile = GetActiveTile(this.gameObject);
+
+
+        }
+        Debug.Log("Damage taken " + damageTaken);
+        Debug.Log("Current health" + currentHealth);
     }
 }

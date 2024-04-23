@@ -63,6 +63,7 @@ public class MouseController : MonoBehaviour
         //movementLeft = charac
         character.activeTile = GetActiveTile();
         GetInRangeTiles(character.MovementLeft);
+        character.CanMove = true;
     }
 
     // Update is called once per frame
@@ -96,7 +97,8 @@ public class MouseController : MonoBehaviour
                         //Execute ability
                         if (character.selectedAbility.type == AbilityType.Environment)
                         {
-                            //Debug.Log("Executed ability");
+                            Debug.Log("Executed ability");
+
                             character.selectedAbility.ExecuteAbility(overlayTile, 0);
 
                         }                   
@@ -105,8 +107,11 @@ public class MouseController : MonoBehaviour
                     {
                         if(character.MovementLeft > 0)
                         {
-                            path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
-                            character.CanMove = false;
+                            if (character.CanMove)
+                            {
+                                path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
+                                character.CanMove = false;
+                            }
                         }       
                     }
                 }

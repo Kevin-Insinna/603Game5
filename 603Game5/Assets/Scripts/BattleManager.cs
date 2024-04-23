@@ -23,9 +23,22 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private GameObject endTurnButton;
 
+    //Setting up battle manage instance
+    private static BattleManager _instance;
+    public static BattleManager Instance { get { return _instance; } }
+
     public void Awake()
     {
-        foreach(PlayerCharacter p in characterList)
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+
+        foreach (PlayerCharacter p in characterList)
         {
             p.IsActiveTurn = false;
             p.MovementLeft = p.TileRange;
@@ -70,7 +83,7 @@ public class BattleManager : MonoBehaviour
         {
             cursorScript.HideCurrentTiles();
 
-            Debug.Log(characterListIndex);
+            //Debug.Log(characterListIndex);
             //Debug.Log("Button pressed");
             if (characterListIndex == characterList.Count - 1)
             {
@@ -128,7 +141,7 @@ public class BattleManager : MonoBehaviour
 
     public void SwapTeam()
     {
-        Debug.Log("Swapping teams");
+        //Debug.Log("Swapping teams");
         if (isPlayerTurn)
         {
             isPlayerTurn = false;

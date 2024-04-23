@@ -3885,7 +3885,7 @@ MonoBehaviour:
   - {fileID: 200118109}
   - {fileID: 1987490988}
   selectedAbility: {fileID: 0}
-  spawnLocation: {x: -7.5, y: 0, z: 0.5}
+  spawnLocation: {x: -7.5, y: 0.82, z: 0.5}
   activeTile: {fileID: 0}
 --- !u!65 &221447582
 BoxCollider:
@@ -18545,7 +18545,7 @@ MonoBehaviour:
   - {fileID: 1794967113}
   - {fileID: 1578306087}
   selectedAbility: {fileID: 0}
-  spawnLocation: {x: -6.5, y: 0, z: 0.5}
+  spawnLocation: {x: -6.5, y: 0.82, z: 0.5}
   activeTile: {fileID: 0}
 --- !u!54 &1025153669
 Rigidbody:
