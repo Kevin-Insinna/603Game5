@@ -16711,7 +16711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 212795059612061394, guid: dd05d23746745eb419ee3c4cafe449a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitToTitle
+      value: BackToMap
       objectReference: {fileID: 0}
     - target: {fileID: 212795059612061394, guid: dd05d23746745eb419ee3c4cafe449a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -16819,7 +16819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053887395071682012, guid: dd05d23746745eb419ee3c4cafe449a3, type: 3}
       propertyPath: m_text
-      value: 'Quit To Title
+      value: 'Back to Map
 
 '
       objectReference: {fileID: 0}

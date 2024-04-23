@@ -35,6 +35,11 @@ public class PauseScreenBehavior : MonoBehaviour
         controlsPanel.SetActive(!controlsPanel.activeInHierarchy);
     }
 
+    public void BackToMap()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     //Button Event: Quits to the title screen
     public void QuitToTitle()
     {
