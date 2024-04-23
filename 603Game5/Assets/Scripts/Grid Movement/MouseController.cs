@@ -276,6 +276,9 @@ public class MouseController : MonoBehaviour
             //Debug.Log("Current cooldown" + character.abilityList[i].currentCooldown);
             if (character.abilityList[i] != null)
             {
+                abilityButtonList[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.abilityList[i].abilityName;
+                abilityButtonList[i].GetComponent<Tooltip>().tipToShow = character.abilityList[i].description;
+
                 if (character.abilityList[i].currentCooldown == 0)
                 {
                     abilityButtonList[i].interactable = true;
@@ -283,10 +286,9 @@ public class MouseController : MonoBehaviour
                 else
                 {
                     abilityButtonList[i].interactable = false;
-                }
+                    abilityButtonList[i].GetComponent<Tooltip>().tipToShow = character.abilityList[i].description + "\n\nOn Cooldown: " + character.abilityList[i].currentCooldown + " Turns Left";
 
-                abilityButtonList[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.abilityList[i].abilityName;
-                abilityButtonList[i].GetComponent<Tooltip>().tipToShow = character.abilityList[i].description;
+                }
             }
         }
     }
