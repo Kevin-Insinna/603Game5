@@ -100,10 +100,8 @@ public class MouseController : MonoBehaviour
                         //Execute ability
                         if (character.selectedAbility.type == AbilityType.Environment)
                         {
-                            Debug.Log("Executed ability");
-
                             character.selectedAbility.ExecuteAbility(overlayTile, 0);
-
+                            //character.CanMove = true;
                         }                   
                     }
                     else
@@ -270,6 +268,7 @@ public class MouseController : MonoBehaviour
         character.selectedAbility = character.abilityList[index];
         character.selectedAbility.SelectAbility();
         abilityButtonList[index].interactable = false;
+        //character.CanMove = false;
     }
 
     public void UpdateButtons()

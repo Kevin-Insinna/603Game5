@@ -31169,7 +31169,10 @@ MonoBehaviour:
   tileRange: 3
   movementSpeed: 3
   damage: 0
-  health: 0
+  health: 3
+  spawnLocation: {x: 10.5, y: 0.82, z: -3.5}
+  currentHealth: 0
+  activeTile: {fileID: 0}
   isActiveTurn: 0
   target: {fileID: 221447580}
   canMove: 0
@@ -31280,7 +31283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633082856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.51, y: 0.82, z: -3.65}
+  m_LocalPosition: {x: 10.5, y: 0.82, z: -3.5}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -42386,7 +42389,10 @@ MonoBehaviour:
   tileRange: 3
   movementSpeed: 3
   damage: 0
-  health: 0
+  health: 3
+  spawnLocation: {x: 10.5, y: 0.82, z: 1.5}
+  currentHealth: 0
+  activeTile: {fileID: 0}
   isActiveTurn: 0
   target: {fileID: 1025153663}
   canMove: 0
@@ -42497,7 +42503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029908253}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.44, y: 0.82, z: 1.67}
+  m_LocalPosition: {x: 10.5, y: 0.82, z: 1.5}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:

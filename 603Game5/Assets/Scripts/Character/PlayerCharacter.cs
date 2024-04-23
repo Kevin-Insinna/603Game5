@@ -22,7 +22,7 @@ public class PlayerCharacter : MonoBehaviour
     private bool hasFlag;
     private Vector3 position;
     public OverlayTile activeTile;
-    private bool canMove;
+    public bool canMove;
     private int movementLeft;
 
     //private List<Item> inventory;
@@ -38,7 +38,7 @@ public class PlayerCharacter : MonoBehaviour
     public bool HasFlag { get; set; }
     public Vector3 Position { get; set; }
 
-    public bool CanMove { get; set; }
+    public bool CanMove { get { return canMove; } set { canMove = value; } }
 
     MouseController mouseControllerRef;
 
@@ -84,6 +84,7 @@ public class PlayerCharacter : MonoBehaviour
 
             if (movementLeft > 0)
             {
+                Debug.Log("This is running");
                 mouseControllerRef.GetInRangeTiles(movementLeft);
                 canMove = true;
             }
