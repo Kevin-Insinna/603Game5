@@ -17,4 +17,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sam's Tests/PlaytestLevel.unity
     guid: 33b88b46747fd844b88b11c01b2d2e67
+  - enabled: 1
+    path: Assets/Scenes/Noah's Tests/OverworldMap.unity
+    guid: 3af309a60a362a24b93e343114b6e2cd
+  - enabled: 1
+    path: Assets/Scenes/Noah's Tests/LevelTest2.unity
+    guid: 9a26ae0ac29374c4e9a6c82dbe4ff19b
+  - enabled: 1
+    path: Assets/Scenes/Noah's Tests/LevelTest.unity
+    guid: efe36df952b10334c8d4b822305277f0
+  - enabled: 1
+    path: Assets/Scenes/Noah's Tests/LevelTest3.unity
+    guid: 4bc429369b440b645acfcac41e3e5f80
   m_configObjects: {}
