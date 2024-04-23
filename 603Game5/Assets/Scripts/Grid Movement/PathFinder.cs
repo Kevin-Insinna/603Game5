@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PathFinder
 {
-    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
+    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> searchableTiles, bool isPlayer)
     {
         Debug.Log("Start location: " + start.gridLocation);
         Debug.Log("End location: " + end.gridLocation);
@@ -16,27 +16,44 @@ public class PathFinder
 
         openList.Add(start);
 
+        int iterationCount = 0;
+
         while(openList.Count > 0)
         {
+            iterationCount++;
             OverlayTile currentOverlayTile = openList.OrderBy(x => x.F).First();
+
+            Debug.Log(currentOverlayTile.gridLocation);
 
             openList.Remove(currentOverlayTile);
             closedList.Add(currentOverlayTile);
 
             if(currentOverlayTile == end)
             {
+                Debug.Log("Found path");
                 return GetFinishedList(start, end);
             }
 
-            var neighborTiles = GetNeighborTiles(currentOverlayTile);
+            var neighborTiles = MapManager.Instance.GetNeighborTiles(currentOverlayTile, searchableTiles);
 
             foreach (var neighborTile in neighborTiles)
             {
                 //1 is jump height
-                if (neighborTile.isBlocked || closedList.Contains(neighborTile))//If y height is figured out || Mathf.Abs(currentOverlayTile.gridLocation.y - neighborTile.gridLocation.y > 1)
+                if (isPlayer)
                 {
-                    continue;
+                    if (neighborTile.isBlocked || closedList.Contains(neighborTile))
+                    {
+                        continue;
+                    }
                 }
+                else
+                {
+                    if (closedList.Contains(neighborTile))
+                    {
+                        continue;
+                    }
+                }
+
 
                 neighborTile.G = GetManhattanDistance(start, neighborTile);
                 neighborTile.H = GetManhattanDistance(end, neighborTile);
@@ -49,7 +66,7 @@ public class PathFinder
                 }
             }
         }
-
+        Debug.Log("Iteration count: " + iterationCount);
         return new List<OverlayTile>();
     }
 
@@ -75,42 +92,4 @@ public class PathFinder
         return Mathf.Abs(start.gridLocation.x - neighborTile.gridLocation.x) + Mathf.Abs(start.gridLocation.z - neighborTile.gridLocation.z);
     }
 
-
-
-    private List<OverlayTile> GetNeighborTiles(OverlayTile overlayTile)
-    {
-        var map = MapManager.Instance.map;
-
-        List<OverlayTile> neighbors = new List<OverlayTile>();
-
-        //Top Neighbor
-        Vector2Int locationToCheck = new Vector2Int(overlayTile.gridLocation.x, overlayTile.gridLocation.y + 1);
-        if (map.ContainsKey(locationToCheck))
-        {
-            neighbors.Add(map[locationToCheck]);
-        }
-
-        //Bottom Neighbor
-        locationToCheck = new Vector2Int(overlayTile.gridLocation.x, overlayTile.gridLocation.y - 1);
-        if (map.ContainsKey(locationToCheck))
-        {
-            neighbors.Add(map[locationToCheck]);
-        }
-
-        //Right Neighbor
-        locationToCheck = new Vector2Int(overlayTile.gridLocation.x + 1, overlayTile.gridLocation.y);
-        if (map.ContainsKey(locationToCheck))
-        {
-            neighbors.Add(map[locationToCheck]);
-        }
-
-        //Left Neighbor
-        locationToCheck = new Vector2Int(overlayTile.gridLocation.x - 1, overlayTile.gridLocation.y);
-        if (map.ContainsKey(locationToCheck))
-        {
-            neighbors.Add(map[locationToCheck]);
-        }
-
-        return neighbors;
-    }
 }
