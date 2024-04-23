@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -63,6 +64,8 @@ public class MouseController : MonoBehaviour
         //movementLeft = charac
         character.activeTile = GetActiveTile();
         GetInRangeTiles(character.MovementLeft);
+
+        UpdateButtons();
     }
 
     // Update is called once per frame
@@ -281,6 +284,9 @@ public class MouseController : MonoBehaviour
                 {
                     abilityButtonList[i].interactable = false;
                 }
+
+                abilityButtonList[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.abilityList[i].abilityName;
+                abilityButtonList[i].GetComponent<Tooltip>().tipToShow = character.abilityList[i].description;
             }
         }
     }

@@ -11,8 +11,8 @@ abstract public class Abilities : MonoBehaviour
         Offensive,
     }
 
-    [SerializeField] protected string abilityName;
-    [SerializeField] protected string description;
+    [SerializeField] public string abilityName;
+    [SerializeField] public string description;
     //[SerializeField] protected int cost;
     [SerializeField] public AbilityType type;
     [SerializeField] public int cooldownTurns;
