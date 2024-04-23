@@ -11,7 +11,7 @@ public class TitleScreenBehavior : MonoBehaviour
     //Button Event: Loads GameScene
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     //Button Event: Toggles options menu
