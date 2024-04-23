@@ -8,8 +8,9 @@ public class PathFinder
 {
     public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, List<OverlayTile> searchableTiles, bool isPlayer)
     {
-        Debug.Log("Start location: " + start.gridLocation);
+/*        Debug.Log("Start location: " + start.gridLocation);
         Debug.Log("End location: " + end.gridLocation);
+        Debug.Log("Searchable tiles count" + searchableTiles.Count);*/
 
         List<OverlayTile> openList = new List<OverlayTile>();
         List<OverlayTile> closedList = new List<OverlayTile>();
@@ -23,14 +24,13 @@ public class PathFinder
             iterationCount++;
             OverlayTile currentOverlayTile = openList.OrderBy(x => x.F).First();
 
-            Debug.Log(currentOverlayTile.gridLocation);
+            //Debug.Log(currentOverlayTile.gridLocation);
 
             openList.Remove(currentOverlayTile);
             closedList.Add(currentOverlayTile);
 
             if(currentOverlayTile == end)
             {
-                Debug.Log("Found path");
                 return GetFinishedList(start, end);
             }
 
@@ -66,7 +66,7 @@ public class PathFinder
                 }
             }
         }
-        Debug.Log("Iteration count: " + iterationCount);
+        //Debug.Log("Iteration count: " + iterationCount);
         return new List<OverlayTile>();
     }
 
