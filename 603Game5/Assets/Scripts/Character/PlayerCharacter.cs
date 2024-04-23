@@ -91,7 +91,10 @@ public class PlayerCharacter : MonoBehaviour
             {
                 mouseControllerRef.ToggleCursor(false);
             }
+
+            mouseControllerRef.endTurnButton.SetActive(true);
         }
+
     }
 
     public void TakeDamage(int damage)
