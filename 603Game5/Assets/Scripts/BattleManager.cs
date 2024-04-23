@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class BattleManager : MonoBehaviour
     public List<Enemy> enemyList;
     public MouseController cursorScript;
     public GameObject onboardingPanel;
+    public TextMeshProUGUI movementText;
 
     int characterListIndex = 0;
     PlayerCharacter currentlyActiveCharacter;
@@ -61,6 +63,11 @@ public class BattleManager : MonoBehaviour
             {                            
                 transform.position = currentlyActiveEnemy.gameObject.transform.position + cameraDistance;
             }
+        }
+
+        if (currentlyActiveCharacter != null)
+        {
+            movementText.text = "Movement Points: " + currentlyActiveCharacter.MovementLeft.ToString();
         }
     }
 
