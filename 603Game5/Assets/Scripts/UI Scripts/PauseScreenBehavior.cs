@@ -8,6 +8,7 @@ public class PauseScreenBehavior : MonoBehaviour
 {
     public GameObject pausePanel;
     public GameObject controlsPanel;
+    public GameObject onboardingPanel;
 
     //Bool to keep track of whether game is paused or not
     public bool isPaused;
@@ -15,7 +16,15 @@ public class PauseScreenBehavior : MonoBehaviour
     //Pause game when escape is pressed
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (onboardingPanel != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && !onboardingPanel.activeInHierarchy)
+            {
+                TogglePause();
+            }
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }

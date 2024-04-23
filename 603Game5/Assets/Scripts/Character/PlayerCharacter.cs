@@ -64,6 +64,7 @@ public class PlayerCharacter : MonoBehaviour
 
     private void MoveAlongPath()
     {
+        mouseControllerRef.endTurnButton.SetActive(false);
         mouseControllerRef.BlockTile(false);
         var step = movementSpeed * Time.deltaTime;
 

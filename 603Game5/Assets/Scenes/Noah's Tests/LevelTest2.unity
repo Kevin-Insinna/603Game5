@@ -3895,6 +3895,7 @@ MonoBehaviour:
   selectedAbility: {fileID: 0}
   spawnLocation: {x: -7.5, y: 0.82, z: 0.5}
   activeTile: {fileID: 0}
+  canMove: 0
 --- !u!65 &221447582
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7822,6 +7823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 1477390130}
   controlsPanel: {fileID: 1400094457}
+  onboardingPanel: {fileID: 1837502576}
   isPaused: 0
 --- !u!114 &438635127
 MonoBehaviour:
@@ -19143,6 +19145,7 @@ MonoBehaviour:
   selectedAbility: {fileID: 0}
   spawnLocation: {x: -6.5, y: 0.82, z: 0.5}
   activeTile: {fileID: 0}
+  canMove: 0
 --- !u!54 &1025153669
 Rigidbody:
   m_ObjectHideFlags: 0
