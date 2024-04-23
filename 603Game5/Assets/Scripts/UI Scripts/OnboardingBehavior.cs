@@ -45,7 +45,7 @@ public class OnboardingBehavior : MonoBehaviour
                 break;
             case 4:
                 titleText.text = "MOVEMENT";
-                onboardingText.text = "You can move the active character by clicking an available square. \n\nEach character can move once per turn";
+                onboardingText.text = "You can move the active character by clicking an available square. \n\nYou can move until a character has used all of their Movement Points";
                 break;
             case 5:
                 titleText.text = "CAMERA CONTROLS";
