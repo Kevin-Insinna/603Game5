@@ -8,6 +8,7 @@ public class BattleManager : MonoBehaviour
     public List<PlayerCharacter> characterList;
     public List<Enemy> enemyList;
     public MouseController cursorScript;
+    public GameObject onboardingPanel;
 
     int characterListIndex = 0;
     PlayerCharacter currentlyActiveCharacter;
@@ -47,7 +48,7 @@ public class BattleManager : MonoBehaviour
 
     public void Update()
     {
-        if (this.gameObject.GetComponent<CameraMovement>().cameraLocked)
+        if (this.gameObject.GetComponent<CameraMovement>().cameraLocked && !onboardingPanel.activeInHierarchy)
         {
             if (isPlayerTurn)
             {
