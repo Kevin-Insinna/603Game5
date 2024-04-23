@@ -42,6 +42,12 @@ abstract public class Abilities : MonoBehaviour
 
     public virtual void DeselectAbility()
     {
+        if (mouseControllerRef.character.MovementLeft > 0)
+        {
+            //Debug.Log("This is running");
+            mouseControllerRef.character.CanMove = true;
+        }
+
         mouseControllerRef.HideCurrentTiles();
         mouseControllerRef.GetInRangeTiles(mouseControllerRef.character.MovementLeft);
         mouseControllerRef.character.selectedAbility = null;
