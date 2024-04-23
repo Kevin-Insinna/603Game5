@@ -8,7 +8,7 @@ public interface ICharacter
     bool IsStunned { get; set; }
     int Damage { get; }
     int Health { get; set; }
-    int Speed { get; }
+    int TileRange { get; }
     bool HasFlag { get; set; }
     Vector3 Position { get; set; }
     //Tilemap reference to location instead of just Vector3?

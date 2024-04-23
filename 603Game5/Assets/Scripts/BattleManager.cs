@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
@@ -26,6 +27,7 @@ public class BattleManager : MonoBehaviour
         foreach(PlayerCharacter p in characterList)
         {
             p.IsActiveTurn = false;
+            p.MovementLeft = p.TileRange;
         }
 
         currentlyActiveCharacter = characterList[characterListIndex];   
@@ -77,27 +79,32 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
-                //Set previous character to not running
+                characterListIndex++;
+                ResetPlayer();
+/*                //Set previous character to not running
                 currentlyActiveCharacter.IsActiveTurn = false;
+                cursorScript.AbilityUpdateTurn();
 
                 //Update new character
                 characterListIndex++;
                 currentlyActiveCharacter = characterList[characterListIndex];
 
                 //Reset character stats
-                cursorScript.movementLeft = currentlyActiveCharacter.Speed;
+                currentlyActiveCharacter.MovementLeft = currentlyActiveCharacter.TileRange;
                 currentlyActiveCharacter.IsActiveTurn = true;
                 currentlyActiveCharacter.CanMove = true;
                 cursorScript.character = currentlyActiveCharacter;
-                
+                currentlyActiveCharacter.activeTile = cursorScript.GetActiveTile();
+                cursorScript.UpdateButtons();
+
                 //Show tiles
-                cursorScript.GetInRangeTiles();
+                cursorScript.GetInRangeTiles(currentlyActiveCharacter.MovementLeft);*/
             }
         }
         else
         {
-            Debug.Log("Enemy list count " + enemyList.Count);
-            Debug.Log("Enemy list index " + enemyListIndex);
+/*            Debug.Log("Enemy list count " + enemyList.Count);
+            Debug.Log("Enemy list index " + enemyListIndex);*/
             if (enemyListIndex > enemyList.Count - 1)
             {
                 enemyListIndex = 0;
@@ -120,6 +127,7 @@ public class BattleManager : MonoBehaviour
 
     public void SwapTeam()
     {
+        Debug.Log("Swapping teams");
         if (isPlayerTurn)
         {
             isPlayerTurn = false;
@@ -130,16 +138,44 @@ public class BattleManager : MonoBehaviour
             isPlayerTurn = true;
             endTurnButton.SetActive(true);
 
+            ResetPlayer();
+
+/*            currentlyActiveCharacter.IsActiveTurn = false;
+            cursorScript.AbilityUpdateTurn();
+
             currentlyActiveCharacter = characterList[characterListIndex];
 
-            cursorScript.movementLeft = currentlyActiveCharacter.Speed;
+            currentlyActiveCharacter.MovementLeft = currentlyActiveCharacter.TileRange;
             currentlyActiveCharacter.IsActiveTurn = true;
             currentlyActiveCharacter.CanMove = true;
             cursorScript.character = currentlyActiveCharacter;
+            currentlyActiveCharacter.activeTile = cursorScript.GetActiveTile();
+            cursorScript.UpdateButtons();
 
-            cursorScript.GetInRangeTiles();
+            cursorScript.GetInRangeTiles(currentlyActiveCharacter.MovementLeft);*/
         }
 
         this.gameObject.GetComponent<CameraMovement>().ResetCamera();
+    }
+
+    public void ResetPlayer()
+    {
+        //Set previous character to not running
+        currentlyActiveCharacter.IsActiveTurn = false;
+        cursorScript.AbilityUpdateTurn();
+
+        //Update new character
+        currentlyActiveCharacter = characterList[characterListIndex];
+
+        //Reset character stats
+        currentlyActiveCharacter.MovementLeft = currentlyActiveCharacter.TileRange;
+        currentlyActiveCharacter.IsActiveTurn = true;
+        currentlyActiveCharacter.CanMove = true;
+        cursorScript.character = currentlyActiveCharacter;
+        currentlyActiveCharacter.activeTile = cursorScript.GetActiveTile();
+        cursorScript.UpdateButtons();
+
+        //Show tiles
+        cursorScript.GetInRangeTiles(currentlyActiveCharacter.MovementLeft);
     }
 }

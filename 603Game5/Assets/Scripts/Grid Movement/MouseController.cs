@@ -2,29 +2,52 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
+using static Abilities;
 
 public class MouseController : MonoBehaviour
 {
+    //Map backend
     public Vector3 worldPosition;
     public LayerMask layersToHit;
     private bool tileIsHit;
-    //private bool isCursorActive;
 
+    //Active character reference
     public GameObject characterPrefab;
     public PlayerCharacter character;
 
-    private PathFinder pathFinder;
-    private List<OverlayTile> path = new List<OverlayTile>();
+    public bool test;
 
-    private RangeFinder rangeFinder;
-    private List<OverlayTile> inRangeTiles = new List<OverlayTile>();
+    //Map 
+    public PathFinder pathFinder;
+    public List<OverlayTile> path = new List<OverlayTile>();
 
-    public float movementSpeed;
-    public int movementLeft; 
+    public RangeFinder rangeFinder;
+    public List<OverlayTile> inRangeTiles = new List<OverlayTile>();
 
-    //private Vector3 tempPathPos;
+    //Ability Buttons
+    public List<Button> abilityButtonList = new List<Button>();
+
+
+    //Setting up mouse controller instance
+    private static MouseController _instance;
+    public static MouseController Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -35,14 +58,9 @@ public class MouseController : MonoBehaviour
         ToggleCursor(true);
 
 
-        movementLeft = character.Speed;
-        /*
-                tileMap.HasTile(tileLocation)
-                character.activeTile = */
-        //GetActiveTile();
-        GetInRangeTiles();
-
-        //tempPathPos = new Vector3();
+        //movementLeft = charac
+        character.activeTile = GetActiveTile();
+        GetInRangeTiles(character.MovementLeft);
     }
 
     // Update is called once per frame
@@ -50,46 +68,60 @@ public class MouseController : MonoBehaviour
     {
         var focusedTileHit = GetFocusedOnTile();
 
-        if (focusedTileHit.HasValue && character.IsActiveTurn)
+        //Debug.Log(character.isActiveTurn);
+        if (focusedTileHit.HasValue && character.isActiveTurn)
         {
+            //Debug.Log("This is running");
             GameObject overlayTile = focusedTileHit.Value.collider.gameObject;
             transform.position = overlayTile.transform.position;
             transform.position = new Vector3(transform.position.x, 0.52f, transform.position.z);
 
-            if(overlayTile.GetComponent<SpriteRenderer>() != null)
+            if (overlayTile.GetComponent<SpriteRenderer>() != null)
             {
                 gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
 
                 if (Input.GetMouseButtonDown(0))
                 {
+               
                     //overlayTile.GetComponent<OverlayTile>().ShowTile();
-                    path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
-                    character.CanMove = false;
+                    if(character.selectedAbility != null)
+                    {
+                        //Execute ability
+                        if (character.selectedAbility.type == AbilityType.Environment)
+                        {
+                            //Debug.Log("Executed ability");
+                            character.selectedAbility.ExecuteAbility(overlayTile, 0);
+
+                        }                   
+                    }
+                    else
+                    {
+                        if(character.MovementLeft > 0)
+                        {
+                            path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
+                            character.CanMove = false;
+                        }       
+                    }
                 }
             }
         }
-
-        if(path.Count > 0)
-        {
-            MoveAlongPath();
-        }
-/*        //Scuffed fix to current active tile hovering above group
-        else if(character.activeTile != null)
-        {
-            character.activeTile.transform.position = new Vector3(character.activeTile.transform.position.x, 0.51f, character.activeTile.transform.position.z);
-        }*/
+        
     }
 
-    public void GetInRangeTiles()
+    public void GetInRangeTiles(int tileRange)
     {
-        GetActiveTile();
+        OverlayTile currentTile = GetActiveTile();
+        //Debug.Log(currentTile.gridLocation);
 
         foreach (var item in inRangeTiles)
         {
             item.HideTile();
         }
 
-        inRangeTiles = rangeFinder.GetTilesInRange(character.activeTile, movementLeft); 
+        inRangeTiles = rangeFinder.GetTilesInRange(currentTile, tileRange);
+        //Debug.Log("Active tile: " + currentTile.gridLocation);
+        //Debug.Log("Tile range: " + tileRange);
+        //Debug.Log(inRangeTiles);
 
         foreach (var item in inRangeTiles)
         {
@@ -99,7 +131,7 @@ public class MouseController : MonoBehaviour
         ToggleCursor(true);
     }
 
-    private void MoveAlongPath()
+   /* private void MoveAlongPath()
     {
         BlockTile(false);
         var step = movementSpeed * Time.deltaTime;
@@ -123,7 +155,7 @@ public class MouseController : MonoBehaviour
 
             if(movementLeft > 0)
             {
-                GetInRangeTiles();
+                GetInRangeTiles(character.activeTile, movementLeft);
                 character.CanMove = true;
             }
             else
@@ -131,7 +163,7 @@ public class MouseController : MonoBehaviour
                 ToggleCursor(false);
             }
         }
-    }
+    }*/
 
     public RaycastHit? GetFocusedOnTile()
     {
@@ -152,18 +184,18 @@ public class MouseController : MonoBehaviour
         }
     }
 
-    private void PositionCharacterOnMap(OverlayTile tile)
+    public void PositionCharacterOnMap(OverlayTile tile)
     {
         character.transform.position = new Vector3(tile.transform.position.x, 0.82f, tile.transform.position.z);
         character.activeTile = tile;
     }
 
-    private void BlockTile(bool isBlocked)
+    public void BlockTile(bool isBlocked)
     {
         character.activeTile.isBlocked = isBlocked;
     }
 
-    private void GetActiveTile()
+    public OverlayTile GetActiveTile()
     {
         var map = MapManager.Instance.map;
 
@@ -186,8 +218,8 @@ public class MouseController : MonoBehaviour
             zValue = -1;
         else
             zValue = -Mathf.CeilToInt(Mathf.Abs(character.transform.position.z));
-
-/*        Debug.Log("Char Position: " + character.transform.position.x +"Xvalue:" + xValue);
+/*
+        Debug.Log("Char Position: " + character.transform.position.x + "Xvalue:" + xValue);
         Debug.Log("Char Position: " + character.transform.position.z + "Zvalue:" + zValue);*/
 
 
@@ -195,8 +227,10 @@ public class MouseController : MonoBehaviour
         //Debug.Log(locationToCheck);    
         if (map.ContainsKey(locationToCheck))
         {
-            character.activeTile = map[locationToCheck];
+            return map[locationToCheck];
         }
+        else
+            return null;
     }
 
     public void HideCurrentTiles()
@@ -213,7 +247,44 @@ public class MouseController : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         else
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
-        Debug.Log("Most recent state: " + cursorState);
     }
 
+    public void SelectAbility(int index)
+    {
+        character.selectedAbility = character.abilityList[index];
+        character.selectedAbility.SelectAbility();
+        abilityButtonList[index].interactable = false;
+    }
+
+    public void UpdateButtons()
+    {
+        //Debug.Log("current character " + character);
+        for (int i = 0; i < abilityButtonList.Count; i++)
+        {
+            //Debug.Log("Iteration "+ i);
+            //Debug.Log("Current cooldown" + character.abilityList[i].currentCooldown);
+            if (character.abilityList[i] != null)
+            {
+                if (character.abilityList[i].currentCooldown == 0)
+                {
+                    abilityButtonList[i].interactable = true;
+                }
+                else
+                {
+                    abilityButtonList[i].interactable = false;
+                }
+            }
+        }
+    }
+
+    public void AbilityUpdateTurn()
+    {
+        foreach(Abilities a in character.abilityList)
+        {
+            if(a.currentCooldown > 0)
+            {
+                a.currentCooldown--;
+            }
+        }
+    }
 }

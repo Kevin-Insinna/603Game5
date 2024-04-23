@@ -6,7 +6,7 @@ using UnityEngine.TextCore.Text;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private int enemySpeedMax;
+    [SerializeField] private int tileRange;
     [SerializeField] private int movementSpeed;
     [SerializeField] private int damage;
     [SerializeField] private int health;
@@ -17,6 +17,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject target;
     public bool canMove;
     private int spacesMoved;
+    private int movementLeft;
+
+    private bool movementEnded;
+    private bool isStunned;
+
 
     private PathFinder pathFinder;
     private List<OverlayTile> path = new List<OverlayTile>();
@@ -40,7 +45,8 @@ public class Enemy : MonoBehaviour
         executeMove = false;
         canMove = false;
 
-        spacesMoved = 0; 
+        spacesMoved = 0;
+        //movementLeft = tileRange;
 
         activeTile = GetActiveTile(this.gameObject);
 
@@ -51,8 +57,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         if (isActiveTurn)
-        {
-            
+        {      
             if (!executeMove)
             {
                 activeTile = GetActiveTile(this.gameObject);
@@ -64,7 +69,7 @@ public class Enemy : MonoBehaviour
                 path = pathFinder.FindPath(activeTile, findTile, inRangeTiles, false);
 
                 executeMove = true;
-                canMove = true;
+                StartCoroutine(CanMoveDelay(1.5f));
             }
 
             if (canMove)
@@ -90,7 +95,8 @@ public class Enemy : MonoBehaviour
             spacesMoved = 0;
 
             isActiveTurn = false;
-            battleManager.EndTurn();
+            StartCoroutine(EndTurnDelay(1.5f));
+            //battleManager.EndTurn();
             return;
         }
 
@@ -101,10 +107,17 @@ public class Enemy : MonoBehaviour
         {
             PositionCharacterOnMap(path[0]);
             path.RemoveAt(0);
-            spacesMoved++;
+            if (movementEnded)
+            {
+                spacesMoved = tileRange;
+            }
+            else
+            {
+                spacesMoved++;
+            }
         }
 
-        if (spacesMoved == enemySpeedMax || path.Count == 0)
+        if (spacesMoved == tileRange || path.Count == 0)
         {
             path = new List<OverlayTile>();
             activeTile = GetActiveTile(this.gameObject);
@@ -173,5 +186,28 @@ public class Enemy : MonoBehaviour
         activeTile = tile;
 
         //IsActiveTurn = false;
+    }
+
+    private IEnumerator CanMoveDelay(float delay)
+    {
+        //Debug.Log("courotine running");
+        yield return new WaitForSeconds(delay);
+        //Debug.Log("courotine done");
+        canMove = true;
+    }
+
+    private IEnumerator EndTurnDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        battleManager.EndTurn();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Banana"))
+        {
+            Destroy(other.gameObject);
+            movementEnded = true;
+        }
     }
 }

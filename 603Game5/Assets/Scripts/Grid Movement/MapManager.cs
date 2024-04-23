@@ -71,7 +71,6 @@ public class MapManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {     
-        //Debug.Log(map);
     }
 
     public List<OverlayTile> GetNeighborTiles(OverlayTile overlayTile, List<OverlayTile> searchableTiles)

@@ -2,25 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Abilities : MonoBehaviour
+abstract public class Abilities : MonoBehaviour
 {
-    enum AbilityType
+    public enum AbilityType
     {
         Self,
         Environment,
         Offensive,
     }
 
-    [SerializeField] private string abilityName;
-    [SerializeField] private string description;
-    [SerializeField] private string cost;
-    [SerializeField] private AbilityType type;
+    [SerializeField] protected string abilityName;
+    [SerializeField] protected string description;
+    //[SerializeField] protected int cost;
+    [SerializeField] public AbilityType type;
+    [SerializeField] public int cooldownTurns;
+    [SerializeField] public int currentCooldown;
 
     private bool showTiles;
+
+    public MouseController mouseControllerRef;
 
     void Start()
     {
         showTiles = false;
+        currentCooldown = 0;
     }
 
     void Update()
@@ -28,9 +33,18 @@ public class Abilities : MonoBehaviour
 
     }
 
-    private void ExecuteAbility(int rangeModifier = 0)
-    {
 
+    public abstract void ExecuteAbility(GameObject chosenTile, int rangeModifier = 0);
+
+    public abstract void ExecuteAbility();
+
+    public abstract void SelectAbility();
+
+    public virtual void DeselectAbility()
+    {
+        mouseControllerRef.HideCurrentTiles();
+        mouseControllerRef.GetInRangeTiles(mouseControllerRef.character.MovementLeft);
+        mouseControllerRef.character.selectedAbility = null;
     }
 
     public void ToggleRangeHighlight(int rangeModifier = 0)
