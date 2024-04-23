@@ -20,7 +20,9 @@ public class MouseController : MonoBehaviour
     public GameObject characterPrefab;
     public PlayerCharacter character;
 
-    public bool test;
+    //Pause Screen
+    public PauseScreenBehavior pauseScript;
+    public GameObject endTurnButton;
 
     //Map 
     public PathFinder pathFinder;
@@ -66,7 +68,12 @@ public class MouseController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        var focusedTileHit = GetFocusedOnTile();
+        RaycastHit? focusedTileHit = null;
+        
+        if (!pauseScript.isPaused)
+        {
+            focusedTileHit = GetFocusedOnTile();
+        }
 
         //Debug.Log(character.isActiveTurn);
         if (focusedTileHit.HasValue && character.isActiveTurn)
@@ -133,6 +140,7 @@ public class MouseController : MonoBehaviour
 
    /* private void MoveAlongPath()
     {
+        endTurnButton.SetActive(false);
         BlockTile(false);
         var step = movementSpeed * Time.deltaTime;
 
