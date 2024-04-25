@@ -101,7 +101,7 @@ public class PlayerCharacter : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-
+        
     }
 
     public void Attack(ICharacter target)

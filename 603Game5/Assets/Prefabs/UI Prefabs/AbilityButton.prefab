@@ -272,3 +272,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tipToShow: Placeholder Ability
   timeToWait: 0.5
+  hovered: 0

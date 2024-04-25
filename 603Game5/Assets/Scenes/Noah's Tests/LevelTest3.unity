@@ -8301,6 +8301,7 @@ MonoBehaviour:
   - {fileID: 991645245}
   - {fileID: 1442691116}
   - {fileID: 524774318}
+  abilitiesHovered: 0
 --- !u!1001 &497789890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9977,6 +9978,7 @@ MonoBehaviour:
   target: {fileID: 1406168613}
   canMove: 0
   battleManager: {fileID: 652429698}
+  healthBar: {fileID: 2096035972}
 --- !u!54 &573478232
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18552,6 +18554,7 @@ MonoBehaviour:
   selectedAbility: {fileID: 0}
   spawnLocation: {x: -6.5, y: 0.82, z: 0.5}
   activeTile: {fileID: 0}
+  canMove: 0
 --- !u!54 &1025153669
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -25536,6 +25539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 20705969}
   controlsPanel: {fileID: 545787766}
+  onboardingPanel: {fileID: 0}
   isPaused: 0
 --- !u!114 &1375980528
 MonoBehaviour:
@@ -26102,6 +26106,7 @@ MonoBehaviour:
   selectedAbility: {fileID: 0}
   spawnLocation: {x: -6.5, y: 0.82, z: -1.5}
   activeTile: {fileID: 0}
+  canMove: 0
 --- !u!65 &1406168615
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27191,6 +27196,7 @@ GameObject:
   - component: {fileID: 1478929555}
   - component: {fileID: 1478929557}
   - component: {fileID: 1478929556}
+  - component: {fileID: 1478929558}
   m_Layer: 5
   m_Name: Abilities
   m_TagString: Untagged
@@ -27257,6 +27263,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478929554}
   m_CullTransparentMesh: 1
+--- !u!114 &1478929558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478929554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 497258601}
+          m_TargetAssemblyTypeName: MouseController, Assembly-CSharp
+          m_MethodName: AbilitiesHovered
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 497258601}
+          m_TargetAssemblyTypeName: MouseController, Assembly-CSharp
+          m_MethodName: AbilitiesUnhovered
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1482904438 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1781706836491088997, guid: 8f8869ecb91ac1849a1e48c74a1c40c6, type: 3}
@@ -31617,6 +31668,7 @@ MonoBehaviour:
   target: {fileID: 1025153663}
   canMove: 0
   battleManager: {fileID: 652429698}
+  healthBar: {fileID: 937694803}
 --- !u!54 &1687263073
 Rigidbody:
   m_ObjectHideFlags: 0

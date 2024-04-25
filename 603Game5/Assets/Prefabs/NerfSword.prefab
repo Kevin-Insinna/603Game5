@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8321327872443026602
 MonoBehaviour:
@@ -50,6 +50,6 @@ MonoBehaviour:
   cooldownTurns: 1
   currentCooldown: 0
   mouseControllerRef: {fileID: 0}
-  range: 1
+  range: 10
   damage: 1
   battleManagerRef: {fileID: 0}

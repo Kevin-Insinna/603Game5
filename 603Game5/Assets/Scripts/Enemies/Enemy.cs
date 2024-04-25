@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int tileRange;
     [SerializeField] private int movementSpeed;
     [SerializeField] private int damage;
-    [SerializeField] private int health;
+    [SerializeField] private float health;
     [SerializeField] private Vector3 spawnLocation;
 
-    [SerializeField] private int currentHealth;
+    [SerializeField] private float currentHealth;
     public OverlayTile activeTile;
     public bool isActiveTurn;
     private bool executeMove;
@@ -36,6 +37,8 @@ public class Enemy : MonoBehaviour
     public BattleManager battleManager;
 
     private OverlayTile findTile;
+
+    public GameObject healthBar;
 
 
     // Start is called before the first frame update
@@ -87,7 +90,6 @@ public class Enemy : MonoBehaviour
 
     private void MoveAlongPath()
     {
-        Debug.Log("Spaces moved" + spacesMoved);
         //Debug.Log("")
         BlockTile(false);
         var step = movementSpeed * Time.deltaTime;
@@ -232,5 +234,7 @@ public class Enemy : MonoBehaviour
         }
         Debug.Log("Damage taken " + damageTaken);
         Debug.Log("Current health" + currentHealth);
+
+        healthBar.GetComponent<Image>().fillAmount = currentHealth/health;
     }
 }
