@@ -37,12 +37,6 @@ public class NerfSword : Abilities
                 e.TakeDamage(damage);
             }
         }
-
-        if (mouseControllerRef.character.MovementLeft > 0)
-        {
-            mouseControllerRef.character.CanMove = true;
-        }
-
         currentCooldown = cooldownTurns;
         DeselectAbility();
     }

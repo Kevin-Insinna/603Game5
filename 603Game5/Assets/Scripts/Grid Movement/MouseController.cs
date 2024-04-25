@@ -28,6 +28,7 @@ public class MouseController : MonoBehaviour
     //Map 
     public PathFinder pathFinder;
     public List<OverlayTile> path = new List<OverlayTile>();
+    public List<OverlayTile> itemPath = new List<OverlayTile>();
 
     public RangeFinder rangeFinder;
     public List<OverlayTile> inRangeTiles = new List<OverlayTile>();
@@ -100,6 +101,7 @@ public class MouseController : MonoBehaviour
                         //Execute ability
                         if (character.selectedAbility.type == AbilityType.Environment)
                         {
+                            itemPath = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
                             character.selectedAbility.ExecuteAbility(overlayTile, 0);
                             //character.CanMove = true;
                         }                   
