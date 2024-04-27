@@ -47,7 +47,7 @@ MonoBehaviour:
   abilityName: Banana Peel
   description: Make an enemy slip
   type: 1
-  cooldownTurns: 4
+  cooldownTurns: 2
   currentCooldown: 0
   mouseControllerRef: {fileID: 0}
   bananaObject: {fileID: 6017204059880744318, guid: c77e9ac5e666dc94ea61bf54ac37c9dc, type: 3}

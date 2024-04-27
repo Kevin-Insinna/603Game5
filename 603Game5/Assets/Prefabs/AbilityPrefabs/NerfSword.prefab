@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityName: Nerf Sword
-  description: Deal 1 Damage to Enemy
-  type: 1
+  description: A simple melee attack
+  type: 2
   cooldownTurns: 1
   currentCooldown: 0
   mouseControllerRef: {fileID: 0}
-  range: 1
-  damage: 1
+  range: 2
+  damage: 15
   battleManagerRef: {fileID: 0}
