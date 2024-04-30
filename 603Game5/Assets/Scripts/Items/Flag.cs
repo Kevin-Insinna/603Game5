@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Flag : MonoBehaviour
 {
+    [SerializeField]
     private Vector3 startingPosition;
     public GameObject winScreen;
 
