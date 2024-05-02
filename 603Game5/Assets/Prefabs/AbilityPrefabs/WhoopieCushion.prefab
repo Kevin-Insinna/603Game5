@@ -50,5 +50,5 @@ MonoBehaviour:
   cooldownTurns: 3
   currentCooldown: 0
   mouseControllerRef: {fileID: 0}
-  bananaObject: {fileID: 6017204059880744318, guid: c77e9ac5e666dc94ea61bf54ac37c9dc, type: 3}
+  bananaObject: {fileID: 6017204059880744318, guid: b520438acfb471446a242fdaeae1043d, type: 3}
   range: 3
