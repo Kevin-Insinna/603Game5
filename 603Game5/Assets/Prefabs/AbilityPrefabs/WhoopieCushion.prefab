@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3043430521340891545}
-  - component: {fileID: 1112257285437558305}
+  - component: {fileID: -1304463284639829272}
   m_Layer: 0
   m_Name: WhoopieCushion
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1112257285437558305
+--- !u!114 &-1304463284639829272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5649390341487492649}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03450aa9b757b56498a32b58427aa0df, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c992877a7909944c992379c823c8d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   abilityName: Whoopie Cushion
@@ -50,5 +50,5 @@ MonoBehaviour:
   cooldownTurns: 3
   currentCooldown: 0
   mouseControllerRef: {fileID: 0}
-  bananaObject: {fileID: 6017204059880744318, guid: b520438acfb471446a242fdaeae1043d, type: 3}
+  whoopieObject: {fileID: 6017204059880744318, guid: b520438acfb471446a242fdaeae1043d, type: 3}
   range: 3
