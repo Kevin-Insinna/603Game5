@@ -34,10 +34,14 @@ public class MouseController : MonoBehaviour
     public List<OverlayTile> inRangeTiles = new List<OverlayTile>();
 
     //Ability Buttons
+    private GameObject currentButton;
     public List<GameObject> abilityButtonList = new List<GameObject>();
     public GameObject abilitiesContent;
     public GameObject abilityButtonPrefab;
     public bool abilitiesHovered;
+
+    //Battle manager ref
+    private BattleManager battleManagerRef;
 
     //Setting up mouse controller instance
     private static MouseController _instance;
@@ -63,6 +67,8 @@ public class MouseController : MonoBehaviour
         rangeFinder = new RangeFinder();
         ToggleCursor(true);
 
+        //Get battle manager instance
+        battleManagerRef = BattleManager.Instance;
 
         //movementLeft = charac
         character.activeTile = GetActiveTile();
@@ -105,8 +111,21 @@ public class MouseController : MonoBehaviour
                         {
                             itemPath = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
                             character.selectedAbility.ExecuteAbility(overlayTile, 0);
+                            currentButton = null;
                             //character.CanMove = true;
-                        }                   
+                        }
+                        else if (character.selectedAbility.type == AbilityType.Offensive)
+                        {
+                            //Debug.Log("Executed offensive ability");
+                            foreach (Enemy e in battleManagerRef.enemyList)
+                            {
+                                if (e.activeTile == overlayTile.GetComponent<OverlayTile>())
+                                {
+                                    character.selectedAbility.ExecuteAbility(e);
+                                    currentButton = null;
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -120,6 +139,18 @@ public class MouseController : MonoBehaviour
                         }                
                     }
                 }
+            }
+
+            //Right click to unselect abilities
+            if (Input.GetMouseButtonDown(1) && character.selectedAbility != null)
+            {
+                if (character.selectedAbility.type == AbilityType.Environment || character.selectedAbility.type == AbilityType.Offensive)
+                {
+                    character.selectedAbility.DeselectAbility();
+                    currentButton.GetComponent<Button>().interactable = true;
+                    currentButton = null;
+                }
+
             }
         }
         
@@ -136,9 +167,6 @@ public class MouseController : MonoBehaviour
         }
 
         inRangeTiles = rangeFinder.GetTilesInRange(currentTile, tileRange);
-        //Debug.Log("Active tile: " + currentTile.gridLocation);
-        //Debug.Log("Tile range: " + tileRange);
-        //Debug.Log(inRangeTiles);
 
         foreach (var item in inRangeTiles)
         {
@@ -147,41 +175,6 @@ public class MouseController : MonoBehaviour
 
         ToggleCursor(true);
     }
-
-   /* private void MoveAlongPath()
-    {
-        endTurnButton.SetActive(false);
-        BlockTile(false);
-        var step = movementSpeed * Time.deltaTime;
-
-        Vector3 tempPathLocation = new Vector3(path[0].transform.position.x, 0.82f, path[0].transform.position.z);
-        character.transform.position = Vector3.MoveTowards(character.transform.position, tempPathLocation, step);
-
-        if (Vector3.Distance(character.transform.position, tempPathLocation) < .01f)
-        {
-            PositionCharacterOnMap(path[0]);
-            path.RemoveAt(0);
-            movementLeft--;
-        }
-
-        if (path.Count == 0)
-        {
-            //GetInRangeTiles();
-            //ToggleCursor(false);
-            HideCurrentTiles();
-            BlockTile(true);
-
-            if(movementLeft > 0)
-            {
-                GetInRangeTiles(character.activeTile, movementLeft);
-                character.CanMove = true;
-            }
-            else
-            {
-                ToggleCursor(false);
-            }
-        }
-    }*/
 
     public RaycastHit? GetFocusedOnTile()
     {
@@ -275,6 +268,9 @@ public class MouseController : MonoBehaviour
             {
                 character.selectedAbility = character.abilityList[index];
                 character.selectedAbility.SelectAbility();
+
+                //Sets current button and makes it so it is not interactible
+                currentButton = abilityButtonList[index];
                 abilityButtonList[index].GetComponent<Button>().interactable = false;
                 //character.CanMove = false;
             }
@@ -284,6 +280,7 @@ public class MouseController : MonoBehaviour
         {
             character.selectedAbility = character.abilityList[index];
             character.selectedAbility.SelectAbility();
+            currentButton = abilityButtonList[index];
             abilityButtonList[index].GetComponent<Button>().interactable = false;
             //character.CanMove = false;
         }

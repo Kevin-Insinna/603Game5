@@ -7,22 +7,6 @@ public class Bandaid : Abilities
     //[SerializeField] private GameObject bananaObject;
     [SerializeField] private int healAmount;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public override void ExecuteAbility(GameObject chosenTile, int rangeModifier = 0)
-    {
-
-    }
-
     public override void ExecuteAbility()
     {
         mouseControllerRef = MouseController.Instance;
