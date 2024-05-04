@@ -219,6 +219,13 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             movementEnded = true;
         }
+
+        if (other.gameObject.CompareTag("Whoopie"))
+        {
+            Destroy(other.gameObject);
+            TakeDamage(15);
+            Debug.Log(health);
+        }
     }
 
     public void TakeDamage(int damageTaken)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NerfSword : Abilities
+public class Slingshot : Abilities
 {
     public BattleManager battleManagerRef;
 
