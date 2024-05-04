@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skateboard : Abilities
+public class Bandaid : Abilities
 {
     //[SerializeField] private GameObject bananaObject;
-    [SerializeField] private int addedRange;
+    [SerializeField] private int healAmount;
 
     public override void ExecuteAbility()
     {
         mouseControllerRef = MouseController.Instance;
-        mouseControllerRef.character.MovementLeft += 2;
-        mouseControllerRef.character.CanMove = true;
-        mouseControllerRef.GetInRangeTiles(mouseControllerRef.character.MovementLeft);
+        mouseControllerRef.character.Health += healAmount;
+        Debug.Log(mouseControllerRef.character.Health);
         currentCooldown = cooldownTurns;
         DeselectAbility();
     }

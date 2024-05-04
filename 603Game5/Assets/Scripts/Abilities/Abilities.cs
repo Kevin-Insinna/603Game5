@@ -18,9 +18,18 @@ abstract public class Abilities : MonoBehaviour
     [SerializeField] public int cooldownTurns;
     [SerializeField] public int currentCooldown;
 
-    private bool showTiles;
 
-    public MouseController mouseControllerRef;
+    //Range for environment and offensive abilities
+    [Header("Environment and Offensive")]
+    [SerializeField] protected int range;
+
+    //Offensive Abilities
+    [Header("Offensive")]
+    [SerializeField] protected int damage;
+
+    //Private helpers
+    protected bool showTiles;
+    protected MouseController mouseControllerRef;
 
     void Start()
     {
@@ -33,13 +42,28 @@ abstract public class Abilities : MonoBehaviour
 
     }
 
+    //Offensive abilities
+    public virtual void ExecuteAbility(Enemy chosenEnemy)
+    {
+        //Deal damage
+        chosenEnemy.TakeDamage(damage);
+        currentCooldown = cooldownTurns;
+        DeselectAbility();
+    }
 
-    public abstract void ExecuteAbility(GameObject chosenTile, int rangeModifier = 0);
+    public virtual void ExecuteAbility(GameObject chosenTile, int rangeModifier = 0)
+    {
+        DeselectAbility();
+    }
 
-    public abstract void ExecuteAbility();
+    public virtual void ExecuteAbility()
+    {
+        DeselectAbility();
+    }
 
     public abstract void SelectAbility();
 
+    //Deselect ability after using it
     public virtual void DeselectAbility()
     {
         if (mouseControllerRef.character.MovementLeft > 0)
