@@ -26,6 +26,8 @@ public class PlayerCharacter : MonoBehaviour
     private int movementLeft;
     public bool nextToBars;
     public Bars nearestBars;
+    public bool nextToShelf;
+    public Shelf nearestShelf;
 
     //private List<Item> inventory;
 
@@ -127,7 +129,11 @@ public class PlayerCharacter : MonoBehaviour
         {
             nextToBars = true;
             nearestBars = other.gameObject.GetComponent<Bars>();
-            Debug.Log("Near Monkey Bars!");
+        }
+        else if (other.gameObject.CompareTag("Shelf"))
+        {
+            nextToShelf = true;
+            nearestShelf = other.gameObject.GetComponent<Shelf>();
         }
     }
 
@@ -137,6 +143,11 @@ public class PlayerCharacter : MonoBehaviour
         {
             nextToBars = false;
             nearestBars = null;
+        }
+        else if (other.gameObject.CompareTag("Shelf"))
+        {
+            nextToShelf = false;
+            nearestShelf = null;
         }
     }
 
