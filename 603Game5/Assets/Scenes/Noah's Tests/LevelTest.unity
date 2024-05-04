@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6575,8 +6575,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveTurn: 0
   damage: 0
-  health: 100
-  tileRange: 4
+  health: 135
+  tileRange: 2
   movementSpeed: 3
   abilityList:
   - {fileID: 2018946275}
@@ -6588,6 +6588,8 @@ MonoBehaviour:
   canMove: 0
   nextToBars: 0
   nearestBars: {fileID: 0}
+  nextToShelf: 0
+  nearestShelf: {fileID: 0}
 --- !u!65 &355246695
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19903,8 +19905,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveTurn: 0
   damage: 0
-  health: 100
-  tileRange: 3
+  health: 80
+  tileRange: 4
   movementSpeed: 3
   abilityList:
   - {fileID: 39412759}
@@ -19916,6 +19918,8 @@ MonoBehaviour:
   canMove: 0
   nextToBars: 0
   nearestBars: {fileID: 0}
+  nextToShelf: 0
+  nearestShelf: {fileID: 0}
 --- !u!54 &1025153669
 Rigidbody:
   m_ObjectHideFlags: 0
