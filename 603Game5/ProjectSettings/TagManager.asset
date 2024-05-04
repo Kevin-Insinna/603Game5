@@ -8,6 +8,7 @@ TagManager:
   - Base
   - Banana
   - Whoopie
+  - MonkeyBars
   layers:
   - Default
   - TransparentFX

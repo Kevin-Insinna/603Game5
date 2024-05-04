@@ -34,8 +34,10 @@ public class MouseController : MonoBehaviour
     public List<OverlayTile> inRangeTiles = new List<OverlayTile>();
 
     //Ability Buttons
-    public List<Button> abilityButtonList = new List<Button>();
-
+    public List<GameObject> abilityButtonList = new List<GameObject>();
+    public GameObject abilitiesContent;
+    public GameObject abilityButtonPrefab;
+    public bool abilitiesHovered;
 
     //Setting up mouse controller instance
     private static MouseController _instance;
@@ -92,7 +94,7 @@ public class MouseController : MonoBehaviour
             {
                 gameObject.GetComponent<SpriteRenderer>().sortingOrder = overlayTile.GetComponent<SpriteRenderer>().sortingOrder;
 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && !abilitiesHovered)
                 {
                
                     //overlayTile.GetComponent<OverlayTile>().ShowTile();
@@ -115,7 +117,7 @@ public class MouseController : MonoBehaviour
                                 path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
                                 character.CanMove = false;
                             }
-                        }       
+                        }                
                     }
                 }
             }
@@ -267,33 +269,56 @@ public class MouseController : MonoBehaviour
 
     public void SelectAbility(int index)
     {
-        character.selectedAbility = character.abilityList[index];
-        character.selectedAbility.SelectAbility();
-        abilityButtonList[index].interactable = false;
-        //character.CanMove = false;
+        if (pauseScript.onboardingPanel != null)
+        {
+            if (!pauseScript.onboardingPanel.activeInHierarchy)
+            {
+                character.selectedAbility = character.abilityList[index];
+                character.selectedAbility.SelectAbility();
+                abilityButtonList[index].GetComponent<Button>().interactable = false;
+                //character.CanMove = false;
+            }
+        }
+
+        else
+        {
+            character.selectedAbility = character.abilityList[index];
+            character.selectedAbility.SelectAbility();
+            abilityButtonList[index].GetComponent<Button>().interactable = false;
+            //character.CanMove = false;
+        }
     }
 
     public void UpdateButtons()
     {
+        abilityButtonList.Clear();
+        foreach (Transform child in abilitiesContent.transform)
+        {
+            Destroy(child.gameObject);
+        }
         //Debug.Log("current character " + character);
-        for (int i = 0; i < abilityButtonList.Count; i++)
+        for (int i = 0; i < character.abilityList.Count; i++)
         {
             //Debug.Log("Iteration "+ i);
             //Debug.Log("Current cooldown" + character.abilityList[i].currentCooldown);
             if (character.abilityList[i] != null)
             {
+                GameObject newAbilityButton = Instantiate(abilityButtonPrefab, abilitiesContent.transform);
+                int tempIndex = i;
+                newAbilityButton.GetComponent<Button>().onClick.AddListener(() => SelectAbility(tempIndex));
+                abilityButtonList.Add(newAbilityButton);
+
                 abilityButtonList[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = character.abilityList[i].abilityName;
                 abilityButtonList[i].GetComponent<Tooltip>().tipToShow = character.abilityList[i].description;
 
                 if (character.abilityList[i].currentCooldown == 0)
                 {
-                    abilityButtonList[i].interactable = true;
+                    abilityButtonList[i].GetComponent<Button>().interactable = true;
                 }
                 else
                 {
-                    abilityButtonList[i].interactable = false;
+                    abilityButtonList[i].GetComponent<Button>().interactable = false;
                     abilityButtonList[i].GetComponent<Tooltip>().tipToShow = character.abilityList[i].description + "\n\nOn Cooldown: " + character.abilityList[i].currentCooldown + " Turns Left";
-
                 }
             }
         }
@@ -308,5 +333,15 @@ public class MouseController : MonoBehaviour
                 a.currentCooldown--;
             }
         }
+    }
+
+    public void AbilitiesHovered()
+    {
+        abilitiesHovered = true;
+    }
+
+    public void AbilitiesUnhovered()
+    {
+        abilitiesHovered = false;
     }
 }

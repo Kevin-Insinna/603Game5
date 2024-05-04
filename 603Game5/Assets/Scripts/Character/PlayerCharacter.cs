@@ -24,6 +24,8 @@ public class PlayerCharacter : MonoBehaviour
     public OverlayTile activeTile;
     public bool canMove;
     private int movementLeft;
+    public bool nextToBars;
+    public Bars nearestBars;
 
     //private List<Item> inventory;
 
@@ -101,7 +103,7 @@ public class PlayerCharacter : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-
+        
     }
 
     public void Attack(ICharacter target)
@@ -120,6 +122,21 @@ public class PlayerCharacter : MonoBehaviour
         {
             transform.position = spawnLocation;
             GetActiveTile();
+        }
+        else if (other.gameObject.CompareTag("MonkeyBars"))
+        {
+            nextToBars = true;
+            nearestBars = other.gameObject.GetComponent<Bars>();
+            Debug.Log("Near Monkey Bars!");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("MonkeyBars"))
+        {
+            nextToBars = false;
+            nearestBars = null;
         }
     }
 
@@ -152,5 +169,11 @@ public class PlayerCharacter : MonoBehaviour
         {
             activeTile = map[locationToCheck];
         }
+    }
+
+    public void SetLocation(Vector3 newPos)
+    {
+        transform.position = newPos;
+        GetActiveTile();
     }
 }
