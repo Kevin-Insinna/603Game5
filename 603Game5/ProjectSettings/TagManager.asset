@@ -9,6 +9,7 @@ TagManager:
   - Banana
   - Whoopie
   - MonkeyBars
+  - Shelf
   layers:
   - Default
   - TransparentFX
