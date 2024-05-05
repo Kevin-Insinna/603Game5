@@ -31,15 +31,15 @@ abstract public class Abilities : MonoBehaviour
     protected bool showTiles;
     protected MouseController mouseControllerRef;
 
+    //Data tracker
+    private DataTracker dataTracker;
+
     void Start()
     {
         showTiles = false;
         currentCooldown = 0;
-    }
 
-    void Update()
-    {
-
+        dataTracker = FindObjectOfType<DataTracker>();
     }
 
     //Offensive abilities
@@ -48,16 +48,19 @@ abstract public class Abilities : MonoBehaviour
         //Deal damage
         chosenEnemy.TakeDamage(damage);
         currentCooldown = cooldownTurns;
+        SaveData();
         DeselectAbility();
     }
 
     public virtual void ExecuteAbility(GameObject chosenTile, int rangeModifier = 0)
     {
+        SaveData();
         DeselectAbility();
     }
 
     public virtual void ExecuteAbility()
     {
+        SaveData();
         DeselectAbility();
     }
 
@@ -75,6 +78,19 @@ abstract public class Abilities : MonoBehaviour
         mouseControllerRef.HideCurrentTiles();
         mouseControllerRef.GetInRangeTiles(mouseControllerRef.character.MovementLeft);
         mouseControllerRef.character.selectedAbility = null;
+    }
+
+    public void SaveData()
+    {
+        mouseControllerRef = MouseController.Instance;
+        if (mouseControllerRef.character.playerInt  == 1)
+        {
+            dataTracker.ModifyP1Abilities(this);
+        }
+        else if (mouseControllerRef.character.playerInt == 2)
+        {
+            dataTracker.ModifyP2Abilities(this);
+        }
     }
 
     public void ToggleRangeHighlight(int rangeModifier = 0)

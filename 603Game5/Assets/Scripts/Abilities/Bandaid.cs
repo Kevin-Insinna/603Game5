@@ -13,6 +13,7 @@ public class Bandaid : Abilities
         mouseControllerRef.character.Health += healAmount;
         Debug.Log(mouseControllerRef.character.Health);
         currentCooldown = cooldownTurns;
+        SaveData();
         DeselectAbility();
     }
 

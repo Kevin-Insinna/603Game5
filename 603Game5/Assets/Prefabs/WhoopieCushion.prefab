@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2339815049159238300}
   m_Layer: 0
   m_Name: WhoopieCushion
-  m_TagString: Banana
+  m_TagString: Whoopie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

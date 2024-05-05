@@ -12,6 +12,7 @@ public class BattleManager : MonoBehaviour
     public MouseController cursorScript;
     public GameObject onboardingPanel;
     public TextMeshProUGUI movementText;
+    private DataTracker dataTracker;
 
     int characterListIndex = 0;
     PlayerCharacter currentlyActiveCharacter;
@@ -31,6 +32,7 @@ public class BattleManager : MonoBehaviour
 
     public void Awake()
     {
+        //Make instance of this
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -40,6 +42,7 @@ public class BattleManager : MonoBehaviour
             _instance = this;
         }
 
+        //Add all players and set currently active player
         foreach (PlayerCharacter p in characterList)
         {
             p.IsActiveTurn = false;
@@ -50,7 +53,7 @@ public class BattleManager : MonoBehaviour
         currentlyActiveCharacter.IsActiveTurn = true;
         cursorScript.character = currentlyActiveCharacter;
 
-
+        //Add all enemies and set currently active enemy
         foreach (Enemy p in enemyList)
         {
             p.isActiveTurn = false;
@@ -61,6 +64,20 @@ public class BattleManager : MonoBehaviour
         //cursorScript.character = currentlyActiveEnemy;
 
         isPlayerTurn = true;
+
+        //Setup Data Tracker
+        dataTracker = FindObjectOfType<DataTracker>();
+
+        //Add abilities to dictionary 
+        foreach(Abilities a in characterList[0].abilityList)
+        {
+            dataTracker.AddP1Abilities(a);
+        }
+        foreach (Abilities a in characterList[1].abilityList)
+        {
+            dataTracker.AddP2Abilities(a);
+        }
+
     }
 
     public void Update()
@@ -90,8 +107,6 @@ public class BattleManager : MonoBehaviour
         {
             cursorScript.HideCurrentTiles();
 
-            //Debug.Log(characterListIndex);
-            //Debug.Log("Button pressed");
             if (characterListIndex == characterList.Count - 1)
             {
                 characterListIndex = 0;
@@ -102,30 +117,10 @@ public class BattleManager : MonoBehaviour
             {
                 characterListIndex++;
                 ResetPlayer();
-/*                //Set previous character to not running
-                currentlyActiveCharacter.IsActiveTurn = false;
-                cursorScript.AbilityUpdateTurn();
-
-                //Update new character
-                characterListIndex++;
-                currentlyActiveCharacter = characterList[characterListIndex];
-
-                //Reset character stats
-                currentlyActiveCharacter.MovementLeft = currentlyActiveCharacter.TileRange;
-                currentlyActiveCharacter.IsActiveTurn = true;
-                currentlyActiveCharacter.CanMove = true;
-                cursorScript.character = currentlyActiveCharacter;
-                currentlyActiveCharacter.activeTile = cursorScript.GetActiveTile();
-                cursorScript.UpdateButtons();
-
-                //Show tiles
-                cursorScript.GetInRangeTiles(currentlyActiveCharacter.MovementLeft);*/
             }
         }
         else
         {
-/*            Debug.Log("Enemy list count " + enemyList.Count);
-            Debug.Log("Enemy list index " + enemyListIndex);*/
             if (enemyListIndex > enemyList.Count - 1)
             {
                 enemyListIndex = 0;
@@ -136,8 +131,6 @@ public class BattleManager : MonoBehaviour
                 currentlyActiveEnemy = enemyList[enemyListIndex];
                 currentlyActiveEnemy.isActiveTurn = true;
                 currentlyActiveEnemy.canMove = true;
-                //cursorScript.character = currentlyActiveCharacter;
-                //cursorScript.GetInRangeTiles();
 
                 enemyListIndex++;
             }
@@ -151,6 +144,7 @@ public class BattleManager : MonoBehaviour
         //Debug.Log("Swapping teams");
         if (isPlayerTurn)
         {
+            dataTracker.AddPlayerTurns();
             isPlayerTurn = false;
             endTurnButton.SetActive(false);
         }          
@@ -160,20 +154,6 @@ public class BattleManager : MonoBehaviour
             endTurnButton.SetActive(true);
 
             ResetPlayer();
-
-/*            currentlyActiveCharacter.IsActiveTurn = false;
-            cursorScript.AbilityUpdateTurn();
-
-            currentlyActiveCharacter = characterList[characterListIndex];
-
-            currentlyActiveCharacter.MovementLeft = currentlyActiveCharacter.TileRange;
-            currentlyActiveCharacter.IsActiveTurn = true;
-            currentlyActiveCharacter.CanMove = true;
-            cursorScript.character = currentlyActiveCharacter;
-            currentlyActiveCharacter.activeTile = cursorScript.GetActiveTile();
-            cursorScript.UpdateButtons();
-
-            cursorScript.GetInRangeTiles(currentlyActiveCharacter.MovementLeft);*/
         }
 
         this.gameObject.GetComponent<CameraMovement>().ResetCamera();

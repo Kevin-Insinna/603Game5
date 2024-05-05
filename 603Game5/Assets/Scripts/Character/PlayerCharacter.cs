@@ -19,6 +19,7 @@ public class PlayerCharacter : MonoBehaviour
 
     [SerializeField] private Vector3 spawnLocation;
 
+    //General info
     private bool hasFlag;
     private Vector3 position;
     public OverlayTile activeTile;
@@ -29,7 +30,9 @@ public class PlayerCharacter : MonoBehaviour
     public bool nextToShelf;
     public Shelf nearestShelf;
 
-    //private List<Item> inventory;
+    //Data Tracker
+    private DataTracker dataTracker;
+    public int playerInt;
 
     public bool IsActiveTurn { get { return isActiveTurn; } set { isActiveTurn = value; } }
     public bool IsStunned { get; set; }
@@ -52,6 +55,9 @@ public class PlayerCharacter : MonoBehaviour
         //Debug.Log("player starting speed" + speed);
         movementLeft = tileRange;
         mouseControllerRef = MouseController.Instance;
+
+        //Setup Data Tracker
+        dataTracker = FindObjectOfType<DataTracker>();
     }
 
     // Update is called once per frame
@@ -80,6 +86,16 @@ public class PlayerCharacter : MonoBehaviour
             mouseControllerRef.PositionCharacterOnMap(mouseControllerRef.path[0]);
             mouseControllerRef.path.RemoveAt(0);
             movementLeft--;
+
+            //Update spaces moved in tracker
+            if(playerInt == 1)
+            {
+                dataTracker.ModifyP1Spaces();
+            }
+            else if(playerInt == 2)
+            {
+                dataTracker.ModifyP2Spaces();
+            }
         }
 
         if (mouseControllerRef.path.Count == 0)
@@ -122,6 +138,16 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
+            //Data tracker, update times tagged
+            if (playerInt == 1)
+            {
+                dataTracker.ModifyP1Tagged();
+            }
+            else if (playerInt == 2)
+            {
+                dataTracker.ModifyP2Tagged();
+            }
+
             transform.position = spawnLocation;
             GetActiveTile();
         }

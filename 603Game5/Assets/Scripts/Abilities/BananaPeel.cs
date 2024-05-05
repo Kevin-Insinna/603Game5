@@ -16,6 +16,7 @@ public class BananaPeel : Abilities
         {
             Instantiate(bananaObject, chosenTile.transform.position + new Vector3(0, .5f, 0), new Quaternion(0, 0, 0, 0));
             currentCooldown = cooldownTurns;
+            SaveData();
             DeselectAbility();
         }
     }

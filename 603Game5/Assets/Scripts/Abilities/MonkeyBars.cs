@@ -9,6 +9,7 @@ public class MonkeyBars : Abilities
 
     public override void ExecuteAbility(GameObject chosenTile, int rangeModifier = 0)
     {
+        SaveData();
         DeselectAbility();
     }
 
@@ -17,6 +18,7 @@ public class MonkeyBars : Abilities
         mouseControllerRef = MouseController.Instance;
         mouseControllerRef.character.SetLocation(mouseControllerRef.character.nearestBars.CrossMonkeyBars(mouseControllerRef.character.transform.position));
         currentCooldown = cooldownTurns;
+        SaveData();
         DeselectAbility();
     }
 

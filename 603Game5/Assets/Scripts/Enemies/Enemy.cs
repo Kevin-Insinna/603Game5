@@ -40,6 +40,8 @@ public class Enemy : MonoBehaviour
 
     public GameObject healthBar;
 
+    //Data tracker
+    private DataTracker dataTracker;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +61,8 @@ public class Enemy : MonoBehaviour
         activeTile = GetActiveTile(this.gameObject);
 
         inRangeTiles = rangeFinder.GetTilesInRange(activeTile, 50);
+
+        dataTracker = FindObjectOfType<DataTracker>();
     }
 
     // Update is called once per frame
@@ -237,7 +241,10 @@ public class Enemy : MonoBehaviour
             transform.position = spawnLocation;
             activeTile = GetActiveTile(this.gameObject);
 
+            dataTracker.ModifyEnemyDeaths();
 
+            spacesMoved = tileRange;
+            movementEnded = false;
         }
         Debug.Log("Damage taken " + damageTaken);
         Debug.Log("Current health" + currentHealth);

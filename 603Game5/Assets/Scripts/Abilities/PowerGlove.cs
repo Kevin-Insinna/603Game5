@@ -6,19 +6,9 @@ public class PowerGlove : Abilities
 {
     private bool nextToShelf;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public override void ExecuteAbility(GameObject chosenTile, int rangeModifier = 0)
     {
+        SaveData();
         DeselectAbility();
     }
 
@@ -27,6 +17,7 @@ public class PowerGlove : Abilities
         mouseControllerRef = MouseController.Instance;
         mouseControllerRef.character.nearestShelf.KnockShelf();
         currentCooldown = cooldownTurns;
+        SaveData();
         DeselectAbility();
     }
 
