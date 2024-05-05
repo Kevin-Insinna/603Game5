@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3043430521340891545}
   - component: {fileID: 1112257285437558305}
+  - component: {fileID: 825334609414787249}
+  - component: {fileID: 1571860176812785123}
   m_Layer: 0
   m_Name: BananaPeelAbility
   m_TagString: Untagged
@@ -52,3 +54,38 @@ MonoBehaviour:
   mouseControllerRef: {fileID: 0}
   bananaObject: {fileID: 6017204059880744318, guid: c77e9ac5e666dc94ea61bf54ac37c9dc, type: 3}
   range: 3
+--- !u!114 &825334609414787249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649390341487492649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc5732ba6b1ef154594c4329f90c6607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Item: {fileID: 11400000, guid: 8e1ff091ed9a6c24699c41d3c1d7d2b8, type: 2}
+--- !u!64 &1571860176812785123
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649390341487492649}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
