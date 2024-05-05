@@ -14,6 +14,7 @@ public class Skateboard : Abilities
         mouseControllerRef.character.CanMove = true;
         mouseControllerRef.GetInRangeTiles(mouseControllerRef.character.MovementLeft);
         currentCooldown = cooldownTurns;
+        SaveData();
         DeselectAbility();
     }
 

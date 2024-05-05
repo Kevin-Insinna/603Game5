@@ -21,12 +21,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Noah's Tests/OverworldMap.unity
     guid: 3af309a60a362a24b93e343114b6e2cd
   - enabled: 1
-    path: Assets/Scenes/Noah's Tests/LevelTest2.unity
+    path: Assets/Scenes/Noah's Tests/Level1.unity
     guid: 9a26ae0ac29374c4e9a6c82dbe4ff19b
   - enabled: 1
-    path: Assets/Scenes/Noah's Tests/LevelTest.unity
+    path: Assets/Scenes/Noah's Tests/Level2.unity
     guid: efe36df952b10334c8d4b822305277f0
   - enabled: 1
-    path: Assets/Scenes/Noah's Tests/LevelTest3.unity
+    path: Assets/Scenes/Noah's Tests/Level3.unity
     guid: 4bc429369b440b645acfcac41e3e5f80
   m_configObjects: {}

@@ -9,9 +9,13 @@ public class Flag : MonoBehaviour
     private Vector3 startingPosition;
     public GameObject winScreen;
 
+    private DataTracker dataTracker;
+
     private void Start()
     {
         startingPosition = transform.position;
+
+        dataTracker = FindObjectOfType<DataTracker>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,6 +51,7 @@ public class Flag : MonoBehaviour
     private void CaptureFlag()
     {
         //Win state!
+        dataTracker.PlayerWon(true);
         winScreen.SetActive(true);
     }
 }
