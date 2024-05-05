@@ -103,7 +103,7 @@ public class DataTracker : MonoBehaviour
                 player1AbilitiesContent += "Times Used: " + a.Value + "\n";
             }
 
-            player1AbilitiesContent += "\nTimes Moved: " + p1SpacesMoved + "\n";
+            player1AbilitiesContent += "\nSpaces Moved: " + p1SpacesMoved + "\n";
             player1AbilitiesContent += "Times Tagged: " + p1TimesTagged + "\n\n";
 
             //Player 2
@@ -114,7 +114,7 @@ public class DataTracker : MonoBehaviour
                 player2AbilitiesContent += "Times Used: " + a.Value + "\n";
             }
 
-            player2AbilitiesContent += "\nTimes Moved: " + p2SpacesMoved + "\n";
+            player2AbilitiesContent += "\nSpaces Moved: " + p2SpacesMoved + "\n";
             player2AbilitiesContent += "Times Tagged: " + p2TimesTagged + "\n\n";
 
             string enemyContent = "Enemy Info\n"

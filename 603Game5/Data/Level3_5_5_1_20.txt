@@ -1,28 +1,28 @@
-Start Time: 5/5/2024 1:02:36 AM
-End Time: 5/5/2024 1:02:53 AM
+Start Time: 5/5/2024 1:20:35 AM
+End Time: 5/5/2024 1:20:49 AM
 Won Game?: False
 Total Player Turns: 1
 
 Player 1 Abilities:
-Nerf Sword
-Times Used: 0
+Banana Peel
+Times Used: 1
 Skateboard
 Times Used: 1
-Whoopie Cushion
-Times Used: 1
+Nerf Sword
+Times Used: 0
 
-Times Moved: 5
+Spaces Moved: 6
 Times Tagged: 0
 
 Player 2 Abilities:
-Banana Peel
+Bandaid
+Times Used: 0
+Whoopie Cushion
 Times Used: 1
 Slingshot
 Times Used: 0
-Bandaid
-Times Used: 0
 
-Times Moved: 2
+Spaces Moved: 2
 Times Tagged: 0
 
 Enemy Info
