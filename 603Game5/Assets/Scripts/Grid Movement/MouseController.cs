@@ -134,7 +134,9 @@ public class MouseController : MonoBehaviour
                             if (character.CanMove)
                             {
                                 path = pathFinder.FindPath(character.activeTile, overlayTile.GetComponent<OverlayTile>(), inRangeTiles, true);
-                                character.CanMove = false;
+                                Debug.Log(path.Count);
+                                if (path.Count > 0) 
+                                    character.CanMove = false;
                             }
                         }                
                     }
@@ -275,7 +277,6 @@ public class MouseController : MonoBehaviour
                 //character.CanMove = false;
             }
         }
-
         else
         {
             character.selectedAbility = character.abilityList[index];

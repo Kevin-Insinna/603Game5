@@ -8364,9 +8364,7 @@ MonoBehaviour:
   pauseScript: {fileID: 1375980527}
   endTurnButton: {fileID: 2078795831}
   path: []
-  itemPath: []
   inRangeTiles: []
-  currentButton: {fileID: 0}
   abilityButtonList:
   - {fileID: 0}
   - {fileID: 0}
@@ -17482,17 +17480,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1448752502987931738, guid: 66893fab52098494f98be8dc5c1c7185, type: 3}
   m_PrefabInstance: {fileID: 1899327702}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &988317840 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -1413166364388766512, guid: b58f02dd83c95ce4ab95045ea20a5e68, type: 3}
-  m_PrefabInstance: {fileID: 310963290}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87e3537cce0ce43428da7df0d1cfd530, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &992049943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18244,7 +18231,7 @@ MonoBehaviour:
   abilityList:
   - {fileID: 1482904438}
   - {fileID: 1651629435}
-  - {fileID: 1036515638}
+  - {fileID: 0}
   selectedAbility: {fileID: 0}
   spawnLocation: {x: -6.5, y: 0.82, z: 0.5}
   activeTile: {fileID: 0}
@@ -18428,17 +18415,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030370919}
   m_CullTransparentMesh: 1
---- !u!114 &1036515638 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -1413166364388766512, guid: b58f02dd83c95ce4ab95045ea20a5e68, type: 3}
-  m_PrefabInstance: {fileID: 295383867}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87e3537cce0ce43428da7df0d1cfd530, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1038336032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8165451171708872603, guid: f1b634e2f76c5ef40ae5a03002e9c206, type: 3}
@@ -25653,7 +25629,7 @@ MonoBehaviour:
   abilityList:
   - {fileID: 665968160}
   - {fileID: 1928028118}
-  - {fileID: 988317840}
+  - {fileID: 0}
   selectedAbility: {fileID: 0}
   spawnLocation: {x: -6.5, y: 0.82, z: -1.5}
   activeTile: {fileID: 0}
